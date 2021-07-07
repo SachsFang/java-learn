@@ -21,8 +21,12 @@ public class main {
         oilStation2.bx1.start();
         oilStation2.bx3.start();*/
 
-        OilStation3 oilStation3 = new OilStation3();
+        /*OilStation3 oilStation3 = new OilStation3();
         oilStation3.oilTank.start();
-        oilStation3.bx1.start();
+        oilStation3.bx1.start();*/
+
+        TicketHouse ticketHouse = new TicketHouse();
+        ticketHouse.sachs.start();
+        ticketHouse.jack.start();
     }
 }

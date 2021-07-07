@@ -1,4 +1,4 @@
-package 函数式接口;
+package 后端.函数式接口;
 
 import java.util.*;
 
