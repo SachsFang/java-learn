@@ -40,10 +40,10 @@ public class TicketHouse implements Runnable {
             fiveAmount+=1;
             System.out.println("电影票5元一张，刚好不用找,"+Thread.currentThread().getName()+"买票了");
         } else if (money == 20) {
-            if (fiveAmount < 3) {
+            while (fiveAmount < 3) {//包含 wait() 方法的条件判断要使用while,因为等线程苏醒后,会以wait()后的代码继续执行,如果此时是if的话,因为wait()前已经判断过一次了,所以wait()之后就不会判断,直接往下走,会造成跳过条件执行的问题
                 System.out.println("不够钱找了，等下一位买票了再找");
                 try {
-                    wait();//如果这里改成 Thread.sleep(5000) 因为方法有synchronized修饰 sleep方法还在占用着该方法 所以其它线程无法进来
+                    wait();//如果这里改成 Thread.sleep(5000) 因为方法有synchronized修饰 sleep方法不释放锁 还在占用着该方法 所以其它线程无法进来
                     System.out.println("SS");
                 } catch (InterruptedException e) {
                     e.printStackTrace();

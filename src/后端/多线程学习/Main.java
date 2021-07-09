@@ -4,7 +4,7 @@ package 后端.多线程学习;
  * Created by SachsFang on 2021/7/5 20:03
  * 多线程主函数
  */
-public class main {
+public class Main {
     public static void main(String[] args) {
         /*OilStation oilStation1 = new OilStation();
         oilStation.setOil(200);
