@@ -4,7 +4,7 @@ package 后端.多线程学习;
  * Created by SachsFang on 2021/7/5 20:03
  * 多线程主函数
  */
-public class Main {
+public class OilStationMain {
     public static void main(String[] args) {
         /*OilStation oilStation1 = new OilStation();
         oilStation.setOil(200);
@@ -21,12 +21,12 @@ public class Main {
         oilStation2.bx1.start();
         oilStation2.bx3.start();*/
 
-        /*OilStation3 oilStation3 = new OilStation3();
+        OilStation3 oilStation3 = new OilStation3();
         oilStation3.oilTank.start();
-        oilStation3.bx1.start();*/
+        oilStation3.bx1.start();
 
-        TicketHouse ticketHouse = new TicketHouse();
+        /*TicketHouse ticketHouse = new TicketHouse();
         ticketHouse.sachs.start();
-        ticketHouse.jack.start();
+        ticketHouse.jack.start();*/
     }
 }
