@@ -6,7 +6,7 @@ package 后端.Java常用设计模式.单例模式;
  */
 public class Bus {
 
-    private static Bus bus = null;
+    private static volatile Bus bus = null;// 解决对象半初始化的问题
 
     private Bus() {}
 
@@ -17,7 +17,7 @@ public class Bus {
         return bus;
     }
 
-    public static Bus currentGetInstance() { //线程安全
+    public static Bus currentGetInstance() { //线程安全，也叫双重检测锁
         if (bus == null) {
             synchronized (Bus.class) {
                 if (bus == null) {
