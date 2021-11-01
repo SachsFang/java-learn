@@ -1,7 +1,7 @@
-package 后端.Java常用设计模式.适配器模式.对象的适配器模式;
+package 后端.Java常用设计模式.适配器模式.对象的适配器模式.手机适配器;
 
-import 后端.Java常用设计模式.适配器模式.类的适配器模式.Plug;
-import 后端.Java常用设计模式.适配器模式.类的适配器模式.PowerPort5v;
+import 后端.Java常用设计模式.适配器模式.类的适配器模式.手机适配器.Plug;
+import 后端.Java常用设计模式.适配器模式.类的适配器模式.手机适配器.PowerPort5v;
 
 /**
  * Created by SachsFang on 2021/7/15 19:30

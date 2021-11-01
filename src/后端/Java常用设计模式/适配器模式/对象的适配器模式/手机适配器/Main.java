@@ -1,4 +1,4 @@
-package 后端.Java常用设计模式.适配器模式.对象的适配器模式;
+package 后端.Java常用设计模式.适配器模式.对象的适配器模式.手机适配器;
 
 /**
  * Created by SachsFang on 2021/7/15 19:29
