@@ -29,7 +29,7 @@ public class StringDemo {
         Scanner scanner = new Scanner(str);
         scanner.useDelimiter(regex);
 
-        var sum = 0;
+        int sum = 0;
         while (scanner.hasNext()) {
             System.out.print(scanner.next() + " ");
             sum ++;

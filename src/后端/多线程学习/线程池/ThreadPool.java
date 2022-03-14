@@ -76,7 +76,7 @@ public class ThreadPool implements Callable<String> {
 
 
     public static void executeCode(ExecutorService executor, int threadAmount) throws ExecutionException, InterruptedException {
-        var THREAD_SIZE = threadAmount;
+        int THREAD_SIZE = threadAmount;
         Date dateStart = new Date();
         List<Future<String>> futureList = new ArrayList<Future<String>>();
         for (int i = 0; i < THREAD_SIZE; i++) {
