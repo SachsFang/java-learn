@@ -9,8 +9,12 @@ import java.math.BigDecimal;
  */
 public class ChargeContext {
     ChargeStrategy chargeStrategy;
+
+    /**
+     * 简单工厂模式结合-构造方法
+     * @param type
+     */
     public ChargeContext(String type) {
-        /* 简单工厂模式结合 */
         switch (type) {
             case "rebate":
                 chargeStrategy = new ChargeRebateStrategy(new BigDecimal(0.8)); break;
@@ -19,6 +23,14 @@ public class ChargeContext {
             default:
                 chargeStrategy = new ChargeNormalStrategy();
         }
+    }
+
+    /**
+     * 策略模式-构造方法
+     * @param chargeStrategy
+     */
+    public ChargeContext(ChargeStrategy chargeStrategy) {
+        this.chargeStrategy = chargeStrategy;
     }
 
     public BigDecimal getResult(BigDecimal money) {
