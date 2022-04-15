@@ -5,23 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by SachsFang on 2021/7/16 11:57
+ * @author shaobin
+ * @Date 2021/7/16 11:57
  */
-public class Subject {//被观察者
+abstract class Subject {//被观察者
 
-    private String name;
-    private List<Observer> observers = new ArrayList<>();
+    protected List<Observer> observers = new ArrayList<>();
 
     public void attach(Observer observer) {
         observers.add(observer);
     }
 
-    public void setName(String name) {
-        this.name = name;
-        notifyAllObservers();
+    public void detach(Observer observer) {
+        observers.remove(observer);
     }
 
-    public void notifyAllObservers() {
+    public void notifyObserver() {
         for (Observer observer : observers) {
             observer.update();
         }
