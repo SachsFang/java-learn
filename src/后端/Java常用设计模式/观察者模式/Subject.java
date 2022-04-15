@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 主题/通知者
  * @author shaobin
  * @Date 2021/7/16 11:57
  */

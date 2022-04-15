@@ -5,12 +5,12 @@ package 后端.Java常用设计模式.观察者模式;
  */
 public class Main {
     public static void main(String[] args) {
-        // 被观察者
+        // 主题/通知者
         ConcreteSubject concreteSubject = new ConcreteSubject("concreteSubject");
         // 观察者1
-        FirstObserver firstObserver = new FirstObserver("fo", concreteSubject);
+        FirstObserver firstObserver = new FirstObserver("fo");
         // 观察者2
-        SecondObserver secondObserver = new SecondObserver("so", concreteSubject);
+        SecondObserver secondObserver = new SecondObserver("so");
         // 加入观察者
         concreteSubject.attach(firstObserver);
         concreteSubject.attach(secondObserver);

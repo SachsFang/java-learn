@@ -5,12 +5,14 @@ package 后端.Java常用设计模式.观察者模式;
  */
 public class FirstObserver extends Observer {
 
-    public FirstObserver(String name, Subject subject) {
-        super(name, subject);
+    private String name;
+
+    public FirstObserver(String name) {
+        this.name = name;
     }
 
     @Override
     public void update() {
-        System.out.println("FirstObserver " + super.name + " already update");
+        System.out.println("FirstObserver " + this.name + " already update");
     }
 }
