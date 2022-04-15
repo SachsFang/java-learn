@@ -16,5 +16,9 @@ public class Main {
         concreteSubject.attach(secondObserver);
         // 向观察者们发出通知
         concreteSubject.notifyObserver();
+        // 去除观察者1
+        concreteSubject.detach(firstObserver);
+        // 向观察者们发出通知
+        concreteSubject.notifyObserver();
     }
 }
