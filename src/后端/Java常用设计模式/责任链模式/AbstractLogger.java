@@ -1,7 +1,5 @@
 package 后端.Java常用设计模式.责任链模式;
 
-import 后端.Java常用设计模式.抽象工厂模式.AbstractFactory;
-
 import java.util.List;
 
 /**
