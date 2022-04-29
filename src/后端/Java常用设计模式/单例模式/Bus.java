@@ -6,7 +6,10 @@ package 后端.Java常用设计模式.单例模式;
  */
 public class Bus {
 
-    private static volatile Bus bus = null;// 解决对象半初始化的问题
+    /**
+     * volatile关键字解决对象半初始化的问题
+     */
+    private static volatile Bus bus = null;
 
     private Bus() {}
 
@@ -18,6 +21,7 @@ public class Bus {
     }
 
     public static Bus currentGetInstance() { //线程安全，也叫双重检测锁
+        // 这个if是为了性能，当创建了对象后，不需要再用到锁了，用锁会影响代码性能，所以用这个if跳过锁代码
         if (bus == null) {
             synchronized (Bus.class) {
                 if (bus == null) {
