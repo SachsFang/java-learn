@@ -2,7 +2,7 @@ package 后端.Java常用设计模式.抽象工厂优化.抽象工厂and简单�
 
 import 后端.Java常用设计模式.抽象工厂模式.database_example.MenuDao;
 import 后端.Java常用设计模式.抽象工厂模式.database_example.OracleMenuDaoImpl;
-import 后端.Java常用设计模式.简单工厂模式.database_example.MySqlUserDaoImpl;
+import 后端.Java常用设计模式.简单工厂模式.database_example.MysqlUserDaoImpl;
 import 后端.Java常用设计模式.简单工厂模式.database_example.OracleUserDaoImpl;
 import 后端.Java常用设计模式.简单工厂模式.database_example.UserDao;
 
@@ -18,7 +18,7 @@ public class DataAccess {
             case "oracle":
                 return new OracleUserDaoImpl();
             case "mysql":
-                return new MySqlUserDaoImpl();
+                return new MysqlUserDaoImpl();
             default:
                 return null;
         }
