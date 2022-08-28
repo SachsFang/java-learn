@@ -1,0 +1,26 @@
+version: "3.0" #定义compose版本号
+services: #服务 - 每个服务是一个独立的容器运行
+  mysql:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password #解决外部无法访问
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_DATABASE: 'springboot_learn'
+      MYSQL_USER: 'ROOT'
+      MYSQL_PASSWORD: '123456'
+    networks:
+      - local_web
+  springboot_learn-web:
+    hostname: learn
+    build: ./ #需要构建的Dockerfile文件,./指当前目录，这里默认指定了当前目录下的Dockerfile文件
+    ports:
+      - "8085:8090"
+    depends_on: #依赖的服务
+      - mysql
+    networks:
+      - local_web
+networks: #定义服务的桥，使用各服务处于同一个局域网，让服务之间能够互相访问
+  local_web:
