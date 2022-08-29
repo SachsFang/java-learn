@@ -1,6 +1,6 @@
-package com.fang.springbootlearn.common.aspect;
+package com.fang.springboot.common.aspect;
 
-import com.fang.springbootlearn.common.util.TransactionalUtils;
+import com.fang.springboot.common.util.TransactionalUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,7 +26,7 @@ public class MyTransactionalAspect {
      * @param joinPoint
      * @return
      */
-    @Around(value = "@annotation(com.fang.springbootlearn.common.annotation.MyTransactional)")
+    @Around(value = "@annotation(com.fang.springboot.common.annotation.MyTransactional)")
     public Object around(ProceedingJoinPoint joinPoint) {
         TransactionStatus begin = null;
         Object result = null;

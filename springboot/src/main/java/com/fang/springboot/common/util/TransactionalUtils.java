@@ -1,4 +1,4 @@
-package com.fang.springbootlearn.common.util;
+package com.fang.springboot.common.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;

@@ -1,10 +1,10 @@
-package com.fang.springbootlearn;
+package com.fang.springboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringbootLearnApplicationTests {
+class SpringbootApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,4 +1,4 @@
-package com.fang.springbootlearn.user.service;
+package com.fang.springboot.user.service;
 
 /**
  * @author shaobin

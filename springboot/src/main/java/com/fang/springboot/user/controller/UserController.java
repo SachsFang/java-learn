@@ -1,6 +1,6 @@
-package com.fang.springbootlearn.controller;
+package com.fang.springboot.user.controller;
 
-import com.fang.springbootlearn.user.service.UserService;
+import com.fang.springboot.user.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

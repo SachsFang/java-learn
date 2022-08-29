@@ -1,7 +1,8 @@
-package com.fang.springbootlearn.user.dao;
+package com.fang.springboot.user.dao;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**
  * @author shaobin

@@ -1,9 +1,9 @@
-package com.fang.springbootlearn.user.serviceimpl;
+package com.fang.springboot.user.serviceimpl;
 
-import com.fang.springbootlearn.common.annotation.MyTransactional;
-import com.fang.springbootlearn.user.dao.UserDAO;
-import com.fang.springbootlearn.user.service.UserService;
-import com.fang.springbootlearn.common.util.TransactionalUtils;
+import com.fang.springboot.common.annotation.MyTransactional;
+import com.fang.springboot.user.dao.UserDAO;
+import com.fang.springboot.user.service.UserService;
+import com.fang.springboot.common.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -17,7 +17,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
     TransactionalUtils transactionalUtils;
