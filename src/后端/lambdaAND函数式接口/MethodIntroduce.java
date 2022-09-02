@@ -48,13 +48,13 @@ public class MethodIntroduce {
 //        InfoInterface infoInterface = (userEntity -> {
 //            return userEntity.getMess();
 //        });
-        InfoInterface infoInterface = UserEntity::getMess;
+        InfoInterface infoInterface = UserEntity::getUserName;
         System.out.println(infoInterface.getMess(new UserEntity()));
         // 实例方法引用
-        MessInterface messInterface3 = new UserEntity()::getMess;
+        MessInterface messInterface3 = new UserEntity()::getUserName;
         System.out.println(messInterface3.getMess());
         //静态方法引用
-        MessInterface messInterface4 = UserEntity::staticGetMess;
+        MessInterface messInterface4 = UserEntity::staticUserName;
         System.out.println(messInterface4.getMess());
     }
     public interface UserInterface {
