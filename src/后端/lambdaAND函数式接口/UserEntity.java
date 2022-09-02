@@ -15,10 +15,35 @@ public class UserEntity {
 
     public UserEntity() {
     }
-    public String getMess() {
+    public String getUserName() {
         return this.userName;
     }
-    public static String staticGetMess() {
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public static String staticUserName() {
         return "static mess";
+    }
+
+    private void privateSetUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "userName='" + userName + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

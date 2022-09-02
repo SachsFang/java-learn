@@ -20,12 +20,12 @@ public class OptionalExample {
         UserEntity userEntityResult = Optional.ofNullable(userEntity).orElse(new UserEntity());
         System.out.println(userEntityResultGet);
 
-        String convertStr = Optional.ofNullable(userEntity).map(UserEntity::getMess).map(String::toLowerCase).orElse(null);
+        String convertStr = Optional.ofNullable(userEntity).map(UserEntity::getUserName).map(String::toLowerCase).orElse(null);
         System.out.println(convertStr);
         // 单个值用 Optional，列表使用 stream
         List<UserEntity> userEntityList = new ArrayList<>();
         userEntityList.add(userEntity);
-        List<String> userEntityStrList = userEntityList.stream().map(UserEntity::getMess).filter(Objects::nonNull).map(String::toLowerCase).collect(Collectors.toList());
+        List<String> userEntityStrList = userEntityList.stream().map(UserEntity::getUserName).filter(Objects::nonNull).map(String::toLowerCase).collect(Collectors.toList());
         System.out.println(userEntityStrList);
     }
 }
