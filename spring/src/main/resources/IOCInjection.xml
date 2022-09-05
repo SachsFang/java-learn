@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+>
+
+    <!-- 配置注入的Spring Bean对象
+     id：一般为类名小写，作为底层map的key值
+     class：类的完整路径，会通过反射技术初始化对象，再将对象作为底层map的value值
+     -->
+<!--    <bean id="user" class="com.fang.spring.user.pojo.User"-->
+<!--          init-method="init" destroy-method="destroy"/>-->
+
+    <!-- 注入属性 - 构造器注入  -->
+    <bean id="constructInjectionParamUser" class="com.fang.spring.user.pojo.User" init-method="init" destroy-method="destroy">
+        <constructor-arg index="0" value="1"/>
+        <constructor-arg index="1" value="&lt;方&gt;">
+            <!-- 写特殊字符有两种方式，一种是在value属性里使用特殊字符的转义字符，另一种是在value标签里面使用<![CDATA[xxx]]] -->
+<!--            <value><![CDATA[<方>]]]></value>-->
+        </constructor-arg>
+        <constructor-arg index="2">
+            <!-- 注入null值 -->
+            <null/>
+        </constructor-arg>
+    </bean>
+
+    <!-- 注入属性 - setter注入 - 第一种写法 -->
+    <bean id="setterInjectionParamUser" class="com.fang.spring.user.pojo.User" init-method="init" destroy-method="destroy">
+        <property name="id" value="2"/>
+        <property name="name" value="sachs"/>
+        <property name="age" value="10"/>
+        <!-- 给数组、列表、集合、键值对、对象集合赋值 -->
+        <property name="addressArray">
+            <array>
+                <value>广州</value>
+                <value>东莞</value>
+            </array>
+        </property>
+        <!-- 如果公共部分，可进行抽取用 util 封装起来 -->
+        <property name="addressList" ref="address-list"/>
+        <property name="addressSet">
+            <set>
+                <value>广州</value>
+                <value>东莞</value>
+            </set>
+        </property>
+        <property name="addressMap">
+            <map>
+                <entry key="1" value="广州"/>
+                <entry key="2" value="东莞"/>
+            </map>
+        </property>
+        <property name="addressObjectList">
+            <list>
+                <ref bean="DGAddress"/>
+                <ref bean="GDAddress"/>
+            </list>
+        </property>
+    </bean>
+    <!-- 提取公共使用的部分 -->
+    <util:list id="address-list">
+        <value>广州</value>
+        <value>东莞</value>
+    </util:list>
+    <!-- Address对象初始化 -->
+    <bean id="DGAddress" class="com.fang.spring.user.pojo.Address">
+        <property name="city" value="东莞"/>
+        <property name="detail" value="南城"/>
+    </bean>
+    <bean id="GDAddress" class="com.fang.spring.user.pojo.Address">
+        <property name="city" value="广州"/>
+        <property name="detail" value="天河"/>
+    </bean>
+
+    <!--注入属性 - setter注入 - 第二种写法（p标签写法） -->
+<!--    <bean id="pSetterInjectionParamUser" class="com.fang.spring.user.pojo.User" init-method="init" destroy-method="destroy"-->
+<!--          p:name="sachsFang" p:age="23" p:id="3"/>-->
+
+    <!-- 注入IOC容器对象（级联赋值） -->
+    <bean id="userServiceImpl" class="com.fang.spring.user.serviceImpl.UserServiceImpl">
+        <!--
+         name 为 UserServiceImpl 中属性名称
+         ref 为 IOC容器中的 beanID
+         -->
+        <property name="myUserDao" ref="userDaoImpl"/>
+        <!-- 可以给注入IOC容器对象赋值 -->
+        <property name="myUserDao.name" value="我的userDao实现"/>
+    </bean>
+    <bean id="userDaoImpl" class="com.fang.spring.user.daoImpl.UserDaoImpl"/>
+
+    <!-- 定义后置处理器
+    会对当前xml文件配置的bean对象生效 -->
+    <bean id="firstAppPostProcessor" class="com.fang.spring.user.processor.FirstAppPostProcessor"/>
+    <bean id="secondAppPostProcessor" class="com.fang.spring.user.processor.SecondAppPostProcessor"/>
+
+</beans>

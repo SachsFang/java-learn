@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="constructInjectionParamUser" class="com.fang.spring.user.pojo.User" init-method="init" destroy-method="destroy">
+        <constructor-arg index="0" value="1"/>
+        <constructor-arg index="1" value="方"/>
+        <constructor-arg index="2" value="18"/>
+    </bean>
+
+    <!-- 注入属性 - setter注入 - 第一种写法 -->
+    <bean id="setterInjectionParamUser" class="com.fang.spring.user.pojo.User" init-method="init" destroy-method="destroy">
+        <property name="id" value="2"/>
+        <property name="name" value="sachs"/>
+        <property name="age" value="10"/>
+    </bean>
+</beans>
