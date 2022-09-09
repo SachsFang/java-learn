@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Default ignored files
+.idea/
+out/
+/.idea/workspace.xml
+
+### reflect ###
+/com/sun/proxy

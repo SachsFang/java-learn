@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <ul>
+        <li ng-repeat="category in categories">{{ category.title }}</li>
+    </ul>
+    <script type="text/ng-template" id="categoryTree">
+        {{ category.title }}
+        <ul ng-if="category.categories">
+            <li ng-repeat="category in category.categories" ng-include="'categoryTree'">
+            </li>
+        </ul>
+
+    </script>
+</div>
+</body>
+</html>
