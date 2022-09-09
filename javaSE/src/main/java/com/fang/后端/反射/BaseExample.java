@@ -24,7 +24,7 @@ public class BaseExample {
         Class<?> stringClass = Class.forName("java.lang.String");
         System.out.println(stringClass);
         // 给成员私有属性赋值
-        Class<?> userEntityClass = Class.forName("后端.lambdaAND函数式接口.UserEntity");
+        Class<?> userEntityClass = Class.forName("com.fang.后端.lambdaAND函数式接口.UserEntity");
         UserEntity userEntity = (UserEntity) userEntityClass.newInstance();
         Field userNameField = userEntityClass.getDeclaredField("userName");// 获取私有属性
         userNameField.setAccessible(true);// 因为是私有属性，所以需要设置可访问权限

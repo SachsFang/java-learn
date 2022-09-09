@@ -15,10 +15,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.fang</groupId>
-    <artifactId>springboot-learn</artifactId>
+    <artifactId>java-learn</artifactId>
     <version>1.0.0</version>
-    <name>springboot-learn</name>
-    <description>springboot-learn</description>
+    <name>java-learn</name>
+    <description>java-learn</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
