@@ -4,3 +4,4 @@ out/
 /.idea/workspace.xml
 *.iml
 /target
+/com/sun/proxy

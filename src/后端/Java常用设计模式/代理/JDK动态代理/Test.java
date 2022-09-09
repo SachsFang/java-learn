@@ -5,11 +5,13 @@ import 后端.Java常用设计模式.代理.UserDaoImpl;
 
 public class Test {
     public static void main(String[] args) {
-        UserDao userDao = new UserDaoImpl();
-        JDKProxy jdkProxy = new JDKProxy();
-        UserDao proxy = (UserDao) jdkProxy.createProxy(userDao);
+        // 将jdk动态代理生成好的 class 文件存放到本地（生成后放在 /com/sun/proxy 以方便研究代理类
+        System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
 
-        proxy.addUser();
+        JDKProxyInvocationHandler jdkProxyInvocationHandler = new JDKProxyInvocationHandler();
+        UserDao proxy = (UserDao) jdkProxyInvocationHandler.createProxy(new UserDaoImpl());
+
+        proxy.addUser("fang", 22);
         proxy.deleteUser();
     }
 }

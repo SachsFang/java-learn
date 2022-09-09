@@ -7,7 +7,7 @@ public class Test {
     public static void main(String[] args) {
         UserDao userDao = new UserDaoImpl();
         StaticProxy proxy = new StaticProxy(userDao);
-        proxy.addUser();
+        proxy.addUser("fang", 22);
         proxy.deleteUser();
     }
 }
