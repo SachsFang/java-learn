@@ -92,9 +92,8 @@
     </bean>
     <bean id="userDaoImpl" class="com.fang.spring.user.daoImpl.UserDaoImpl"/>
 
-    <!-- 定义后置处理器
-    会对当前xml文件配置的bean对象生效 -->
-    <bean id="firstAppPostProcessor" class="com.fang.spring.user.processor.FirstAppPostProcessor"/>
-    <bean id="secondAppPostProcessor" class="com.fang.spring.user.processor.SecondAppPostProcessor"/>
+    <!-- 注入IOC容器对象（自动装配） -->
+    <bean id="autoUserServiceImpl" class="com.fang.spring.user.serviceImpl.UserServiceImpl" autowire="byName"/>
+    <bean id="myUserDao" class="com.fang.spring.user.daoImpl.UserDaoImpl"/>
 
 </beans>
