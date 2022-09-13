@@ -14,7 +14,6 @@
     <properties>
         <spring.version>5.2.1.RELEASE</spring.version>
     </properties>
-
     <dependencies>
         <!--这个jar 文件包含Spring 框架基本的核心工具类。Spring 其它组件要都要使用到这个包里的类，是其它组件的基本核心，当然你也可以在自己的应用系统中使用这些工具类。
         外部依赖Commons Logging， (Log4J)
@@ -49,5 +48,27 @@
 
     </dependencies>
 
-
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <!--Maven的默认约定约定打包时只会将resources目录下的xml文件打包，写在java目录下的xml文件不会被打包，如要打包java的xml，则需要配置：-->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 </project>

@@ -23,7 +23,7 @@ public class JDKProxyInvocationHandler implements InvocationHandler {
         // 类加载器 - 第一个参数传递的是目标对象的类加载器
         ClassLoader classLoader = target.getClass().getClassLoader();
         // 目标对象实现的所有接口 - 第二个参数
-        Class<? >[] interfaces = target.getClass().getInterfaces();
+        Class<?>[] interfaces = target.getClass().getInterfaces();
         // 自己实现的 JDKProxy InvocationHandler - 第三个参数
         // 生成代理类对象
         return Proxy.newProxyInstance(classLoader, interfaces, this);

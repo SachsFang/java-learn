@@ -94,6 +94,8 @@
 
     <!-- 注入IOC容器对象（自动装配） -->
     <bean id="autoUserServiceImpl" class="com.fang.spring.user.serviceImpl.UserServiceImpl" autowire="byName"/>
-    <bean id="myUserDao" class="com.fang.spring.user.daoImpl.UserDaoImpl"/>
+    <bean id="myUserDao" class="com.fang.spring.user.daoImpl.UserDaoImpl" scope="singleton"/>
+    <!-- 多例 -->
+<!--    <bean id="myUserDao" class="com.fang.spring.user.daoImpl.UserDaoImpl" scope="prototype"/>-->
 
 </beans>
