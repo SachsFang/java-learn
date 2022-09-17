@@ -38,4 +38,5 @@ out/
 /.idea/workspace.xml
 
 ### reflect ###
-/com/sun/proxy
+com/sun/proxy
+*.class

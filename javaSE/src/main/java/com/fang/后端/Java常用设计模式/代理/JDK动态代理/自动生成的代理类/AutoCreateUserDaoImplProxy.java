@@ -1,9 +1,11 @@
-package com.fang.后端.Java常用设计模式.代理.JDK动态代理;
+package com.fang.后端.Java常用设计模式.代理.JDK动态代理.自动生成的代理类;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.UndeclaredThrowableException;
+
+import com.fang.后端.Java常用设计模式.代理.JDK动态代理.JDKProxyInvocationHandler;
 import com.fang.后端.Java常用设计模式.代理.UserDao;
 import com.fang.后端.Java常用设计模式.代理.UserDaoImpl;
 
