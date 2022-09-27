@@ -2,17 +2,20 @@ package com.fang.spring.user.serviceImpl;
 
 import com.fang.spring.user.dao.UserDao;
 import com.fang.spring.user.daoImpl.UserDaoImpl;
+import com.fang.spring.user.service.UserService;
 
 /**
  * @author shaobin
  * @date 2022/9/4 12:17
  */
-public class UserServiceImpl implements UserDao {
+public class UserServiceImpl implements UserService {
 
     private UserDaoImpl myUserDao;
 
     @Override
     public void addUser() {
+        // 模拟出错
+        int i = 1 / 0;
         myUserDao.addUser();
     }
 

@@ -1,4 +1,4 @@
-package com.fang.spring.user.factory;
+package com.fang.spring.factory;
 
 import com.fang.spring.my_ioc.MyBeanFactory;
 import com.fang.spring.user.pojo.User;

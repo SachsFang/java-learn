@@ -1,4 +1,4 @@
-package com.fang.spring.user.my_mybatis;
+package com.fang.spring.my_mybatis;
 
 import com.fang.spring.my_mybatis.MySqlSession;
 import com.fang.spring.my_mybatis.UserMapper;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--配置基础bean-->
+    <bean id="userServiceImpl" class="com.fang.spring.user.serviceImpl.UserServiceImpl">
+        <property name="myUserDao" ref="userDaoImpl"/>
+    </bean>
+    <bean id="userDaoImpl" class="com.fang.spring.user.daoImpl.UserDaoImpl"/>
+    <bean id="user" class="com.fang.spring.user.pojo.User"/>
+    <!--这是基于XML文件配置的方式配置的AOP-->
+    <bean id="xmlConfigAspect" class="com.fang.spring.aop.XmlConfigAspect"/>
+    <aop:config>
+        <!-- 配置切面 -->
+        <aop:aspect ref="xmlConfigAspect">
+            <!-- 配置切入点，通知最后增强哪些方法 -->
+            <aop:pointcut expression="execution(* com.fang.spring.user.serviceImpl.UserServiceImpl.*(..))" id="myPointCut"/>
+            <!-- 前置通知 -->
+            <aop:before method="myBefore" pointcut-ref="myPointCut"/>
+            <!-- 后置通知：程序发生异常时，此通知不执行 -->
+            <aop:after-returning method="myAfterReturning" pointcut-ref="myPointCut"/>
+            <!-- 环绕通知 -->
+            <aop:around method="myAround" pointcut-ref="myPointCut"/>
+            <!-- 异常通知：用于处理程序发生异常-->
+            <!-- * throwing属性：用于设置通知第二个参数的名称，类型Throwable -->
+            <aop:after-throwing method="myAfterThrowing" pointcut-ref="myPointCut" throwing="e"/>
+            <!-- 最终通知：无论程序是否发生异常，都将执行 -->
+            <aop:after method="myAfter" pointcut-ref="myPointCut"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!--这是基于注解方式需要配置的-->
+    <!--开启注解方式 -->
+<!--    <context:component-scan base-package="com.fang.spring"/>-->
+    <!--开启 aspectj 生成代理-->
+    <aop:aspectj-autoproxy/>
+</beans>

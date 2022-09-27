@@ -1,5 +1,6 @@
-package com.fang.spring.user.pojo;
+package com.fang.spring.pojo;
 
+import com.fang.spring.user.pojo.User;
 import com.fang.spring.user.serviceImpl.UserServiceImpl;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
