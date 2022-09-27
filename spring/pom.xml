@@ -3,72 +3,99 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>java-learn</artifactId>
+        <artifactId>java-learn-parent</artifactId>
         <groupId>com.fang</groupId>
-        <version>1.0.0</version>
+        <version>${java-learn.version}</version>
+        <relativePath>../java-learn-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring</artifactId>
 
-    <properties>
-        <spring.version>5.2.1.RELEASE</spring.version>
-    </properties>
     <dependencies>
-        <!--这个jar 文件包含Spring 框架基本的核心工具类。Spring 其它组件要都要使用到这个包里的类，是其它组件的基本核心，当然你也可以在自己的应用系统中使用这些工具类。
-        外部依赖Commons Logging， (Log4J)
-        -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
         </dependency>
-        <!--这个jar 文件是所有应用都要用到的，它包含访问配置文件、创建和管理bean 以及进行Inversion ofControl / Dependency Injection（IoC/DI）操作相关的所有类。
-        如果应用只需基本的IOC/DI 支持，引入spring-core.jar 及spring-beans.jar 文件就可以了。外部依赖spring-core，(CGLIB)
-        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>${spring.version}</version>
         </dependency>
-        <!--这个jar 文件为Spring 核心提供了大量扩展。可以找到使用Spring ApplicationContext特性时所需的全部类，JDNI 所需的全部类，instrumentation组件以及校验Validation 方面的相关类。
-        外部依赖spring-beans, (spring-aop)。
-        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
         </dependency>
-
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
-            <version>1.6.1</version>
+        </dependency>
+        <!-- aspectj支持 -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.bundles</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+        <!-- spring web -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
         </dependency>
 
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.yml</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-            <!--Maven的默认约定约定打包时只会将resources目录下的xml文件打包，写在java目录下的xml文件不会被打包，如要打包java的xml，则需要配置：-->
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.yml</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+        <defaultGoal>compile</defaultGoal>
+        <!--        <resources>-->
+        <!--            <resource>-->
+        <!--                <directory>src/main/resources</directory>-->
+        <!--                <includes>-->
+        <!--                    <include>**/*.properties</include>-->
+        <!--                    <include>**/*.xml</include>-->
+        <!--                    <include>**/*.yml</include>-->
+        <!--                </includes>-->
+        <!--                <filtering>true</filtering>-->
+        <!--            </resource>-->
+        <!--            &lt;!&ndash;Maven的默认约定约定打包时只会将resources目录下的xml文件打包，写在java目录下的xml文件不会被打包，如要打包java的xml，则需要配置：&ndash;&gt;-->
+        <!--            <resource>-->
+        <!--                <directory>src/main/java</directory>-->
+        <!--                <includes>-->
+        <!--                    <include>**/*.properties</include>-->
+        <!--                    <include>**/*.xml</include>-->
+        <!--                    <include>**/*.yml</include>-->
+        <!--                </includes>-->
+        <!--                <filtering>true</filtering>-->
+        <!--            </resource>-->
+        <!--        </resources>-->
+        <!-- build使用插件 -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <configuration>
+                    <port>85</port>
+                    <path>/</path>
+                    <ignorePackaging>true</ignorePackaging>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
