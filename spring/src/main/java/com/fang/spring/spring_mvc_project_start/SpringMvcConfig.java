@@ -21,7 +21,6 @@ public class SpringMvcConfig implements WebMvcConfigurer {
      * 视图解析器配置
      * @return
      */
-    @Bean
     public InternalResourceViewResolver resourceViewResolver() {
         InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
         //请求视图文件的前缀地址
