@@ -8,8 +8,14 @@ import org.springframework.stereotype.Component;
  * @date 2022/9/12 21:41
  */
 @Component
-public interface UserMapper {
+public interface MyUserMapper {
 
+    /**
+     * 自定义 Mybaits 的 Mapper 实现
+     * @param name
+     * @param age
+     * @return
+     */
     @MyInsert("INSERT INTO `users` (`name`,`age`) VALUES ('mybatisTest','22');")
     int insertUser(@Param("name") String name, @Param("age") Integer age);//todo: 传参需要 MapperInvocationHandler.invoke 对参数进行处理
 
