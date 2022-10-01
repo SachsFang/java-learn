@@ -1,5 +1,6 @@
 package com.fang.spring.spring_mvc_project_start;
 
+import com.fang.spring.config.SpringConfig;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
@@ -14,7 +15,7 @@ public class ServletInitializer extends AbstractDispatcherServletInitializer {
     protected WebApplicationContext createServletApplicationContext() {
         AnnotationConfigWebApplicationContext webApplicationContext = new AnnotationConfigWebApplicationContext();
         // 加入类配置注解
-        webApplicationContext.register(SpringMvcConfig.class);
+        webApplicationContext.register(new Class[]{SpringConfig.class, SpringMvcConfig.class});
         return webApplicationContext;
     }
 

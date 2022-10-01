@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.fang.spring.user")
+@ComponentScan("com.fang.spring.*.controller")
 public class SpringMvcConfig implements WebMvcConfigurer {
     /**
      * 视图解析器配置
