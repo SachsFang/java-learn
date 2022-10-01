@@ -3,13 +3,15 @@ package com.fang.spring.common.pojo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author shaobin
  * @date 2022/9/30 11:37
  */
 @Data
 @NoArgsConstructor
-public class BaseResp<T> {
+public class BaseResp<T>implements Serializable {
 
     public static final String SUCCESS_CODE = "200";
 

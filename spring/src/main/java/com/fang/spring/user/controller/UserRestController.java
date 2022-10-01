@@ -87,7 +87,7 @@ public class UserRestController {
     }
 
     @PostMapping
-    public BaseResp insertUser(User user) {
+    public BaseResp<String> insertUser(User user) {
         if (userService.insert(user) > 0) {
             return BaseRespBuilder.success().build();
         } else {
@@ -96,7 +96,7 @@ public class UserRestController {
     }
 
     @PutMapping
-    public BaseResp updateUser(User user) {
+    public BaseResp<String> updateUser(User user) {
         if (userService.update(user) > 0) {
             return BaseRespBuilder.success().build();
         } else {
@@ -105,7 +105,7 @@ public class UserRestController {
     }
 
     @DeleteMapping("/{id}")
-    public BaseResp deleteUser(@PathVariable("id") String id) {
+    public BaseResp<String> deleteUser(@PathVariable("id") String id) {
         if (userService.delete(id) > 0) {
             return BaseRespBuilder.success().build();
         } else {

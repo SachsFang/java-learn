@@ -33,7 +33,7 @@ public final class BaseRespBuilder {
         return this;
     }
 
-    public BaseResp build() {
+    public <T> BaseResp<T> build() {
         return this.baseResp;
     }
 }
