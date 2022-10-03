@@ -14,7 +14,7 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 public class TransactionalUtils {
 
     @Autowired
-    DataSourceTransactionManager dataSourceTransactionManager;
+    private DataSourceTransactionManager dataSourceTransactionManager;
 
     /**
      * 开启事务
