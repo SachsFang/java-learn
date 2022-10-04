@@ -5,6 +5,7 @@ import com.fang.springboot.user.dao.UserDAO;
 import com.fang.springboot.user.service.UserService;
 import com.fang.springboot.common.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;

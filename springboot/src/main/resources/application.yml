@@ -33,4 +33,9 @@ server:
     # 设置springboot项目访问路径
     context-path: /learn
 
+# 个人配置
+sachs:
+  name: sachs
+  sex: boy
+  age: 22
 

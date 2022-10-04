@@ -1,9 +1,11 @@
 package com.fang.springboot.user.controller;
 
 import com.fang.springboot.user.User;
+import com.fang.springboot.user.properties.UserConfig;
 import com.fang.springboot.user.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,41 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/user")
-public class    UserController {
+public class UserController {
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private UserConfig userConfig;
+
+    @Value("${sachs.name}")
+    private String userConfigName;
+
+    @Value("${sachs.age}")
+    private int userConfigAge;
+
+    @Value("${sachs.sex}")
+    private String userConfigSex;
+
+    /**
+     * 使用 @Value 获取配置
+     * @return
+     */
+    @RequestMapping("/getUserConfig1")
+    @ResponseBody
+    public String getUserConfig1() {
+        return userConfigName + " " + userConfigAge + " " + userConfigSex;
+    }
+
+    /**
+     * 使用 @ConfigurationProperties 获取配置
+     * @return
+     */
+    @RequestMapping("/getUserConfig2")
+    @ResponseBody
+    public String getUserConfig2() {
+        return userConfig.getName() + " " + userConfig.getAge() + " " + userConfig.getSex();
+    }
 
     @RequestMapping("/insert")
     @ResponseBody
@@ -59,6 +93,7 @@ public class    UserController {
     /**
      * thymeleaf 传参方式1 (推荐）
      * 可以避免html的传参误报错误
+     *
      * @param modelMap
      * @return
      */
@@ -71,6 +106,7 @@ public class    UserController {
 
     /**
      * thymeleaf 传参方式2
+     *
      * @return
      */
     @GetMapping("/test/thymeleaf2")
@@ -79,8 +115,6 @@ public class    UserController {
         httpServletRequest.setAttribute("user", user);
         return "/user/index";
     }
-
-
 
 
 }
