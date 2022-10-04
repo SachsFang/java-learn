@@ -16,8 +16,21 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    #prefix：指定模板所在的目录
+    prefix: classpath:/templates/
+    #check-tempate-location: 检查模板路径是否存在
+    check-template-location: true
+    #cache: 是否缓存，开发模式下设置为false，避免改了模板还要重启服务器，线上设置为true，可以提高性能。
+    cache: false
+    suffix:  .html
+    encoding: UTF-8
+    mode: HTML5
+
 server:
   port: ${WEB_PORT:8090}
   servlet:
     # 设置springboot项目访问路径
     context-path: /learn
+
+
