@@ -40,3 +40,6 @@ out/
 ### reflect ###
 com/sun/proxy
 *.class
+
+### log ###
+*/log

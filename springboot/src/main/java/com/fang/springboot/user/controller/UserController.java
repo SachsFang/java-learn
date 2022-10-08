@@ -3,6 +3,7 @@ package com.fang.springboot.user.controller;
 import com.fang.springboot.user.User;
 import com.fang.springboot.user.properties.UserConfig;
 import com.fang.springboot.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
     @Autowired
     private UserService userService;
@@ -116,5 +117,12 @@ public class UserController {
         return "/user/index";
     }
 
+
+    @GetMapping("/testLog")
+    @ResponseBody
+    public String testLog() {
+        log.info("测试日志");
+        return "";
+    }
 
 }
