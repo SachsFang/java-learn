@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    include:
+      - config-learn
+      - config-web
+      - config-datasource
+      - config-personal
+      - config-thymeleaf
+      - config-env

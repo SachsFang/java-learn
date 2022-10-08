@@ -1,41 +1,4 @@
-# 遗留问题为什么这样配置不行
-#spring:
-#  profiles:
-#    include:
-#      - config-learn
-#      - config-web
-#      - config-datasource
-#      - env
-
 spring:
-  application:
-    name: springboot-learn
-  datasource:
-    # 使用docker-compose时，mysql:3306 这里不能写localhost:3306，应该写mysql:3306，mysql对应的是配置文件中服务名称
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-  thymeleaf:
-    #prefix：指定模板所在的目录
-    prefix: classpath:/templates/
-    #check-tempate-location: 检查模板路径是否存在
-    check-template-location: true
-    #cache: 是否缓存，开发模式下设置为false，避免改了模板还要重启服务器，线上设置为true，可以提高性能。
-    cache: false
-    suffix:  .html
-    encoding: UTF-8
-    mode: HTML5
-
-server:
-  port: ${WEB_PORT:8090}
-  servlet:
-    # 设置springboot项目访问路径
-    context-path: /learn
-
-# 个人配置
-sachs:
-  name: sachs
-  sex: boy
-  age: 22
-
+  profiles:
+    # 指定激活哪个环境的配置文件
+    active: dev
