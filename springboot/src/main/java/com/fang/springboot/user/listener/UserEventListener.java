@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UserEventListener {
 
-    @Async
+    @Async("taskExecutor")
     public void sendSMS() throws InterruptedException {
         log.info("<3>向用户发送短信中...");
         Thread.sleep(3000);
