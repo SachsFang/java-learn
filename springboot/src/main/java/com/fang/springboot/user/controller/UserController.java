@@ -1,6 +1,7 @@
 package com.fang.springboot.user.controller;
 
 import com.fang.springboot.user.User;
+import com.fang.springboot.user.listener.UserEventListener;
 import com.fang.springboot.user.properties.UserConfig;
 import com.fang.springboot.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserConfig userConfig;
+
+    @Autowired
+    UserEventListener userEventListener;
 
     @Value("${sachs.name}")
     private String userConfigName;
@@ -122,6 +126,17 @@ public class UserController {
     @ResponseBody
     public String testLog() {
         log.info("测试日志");
+        return "ok";
+    }
+
+    @GetMapping("/textAsync")
+    @ResponseBody
+    public String testAsync() throws InterruptedException {
+        log.info("<1>插入一条用户信息");
+        Thread.sleep(1000);
+        log.info("<2>插入成功");
+        userEventListener.sendSMS();
+        log.info("<4>操作完成");
         return "ok";
     }
 
