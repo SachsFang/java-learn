@@ -18,7 +18,7 @@ import java.util.Enumeration;
 @Aspect
 @Slf4j
 public class UserRequestLogAspect {
-    @Pointcut("execution(* com.fang.springboot.user.controller.*.*(..))")
+    @Pointcut("execution(* com.fang.springboot.user.service.*.*(..))")
     public void pointCut() {
     }
 

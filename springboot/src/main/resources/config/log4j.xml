@@ -4,7 +4,7 @@
     <!--控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d %p (%file:%line\)- %m%n</pattern>
+            <pattern>%d %t %p (%file:%line\)- %m%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -24,7 +24,7 @@
         </rollingPolicy>
         <encoder>
             <pattern>
-                %d %p (%file:%line\)- %m%n
+                %d %t %p (%file:%line\)- %m%n
             </pattern>
             <charset>UTF-8</charset>
             <!-- 此处设置字符集 -->
@@ -45,7 +45,7 @@
         <encoder>
             <!--用来设置日志的输入格式-->
             <pattern>
-                %d %p (%file:%line\)- %m%n
+                %d %t %p (%file:%line\)- %m%n
             </pattern>
             <charset>UTF-8</charset>
             <!-- 此处设置字符集 -->
@@ -66,7 +66,7 @@
         <encoder>
             <!--用来设置日志的输入格式-->
             <pattern>
-                %d %p (%file:%line\)- %m%n
+                %d %t %p (%file:%line\)- %m%n
             </pattern>
             <charset>UTF-8</charset>
             <!-- 此处设置字符集 -->
