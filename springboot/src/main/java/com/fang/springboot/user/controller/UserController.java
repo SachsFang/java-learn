@@ -122,7 +122,7 @@ public class UserController {
     @ResponseBody
     public String testLog() {
         log.info("测试日志");
-        return "";
+        return "ok";
     }
 
 }
