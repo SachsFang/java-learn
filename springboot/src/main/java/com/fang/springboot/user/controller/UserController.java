@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.annotation.XmlElementRef;
 
 /**
  * @author shaobin
@@ -161,5 +162,11 @@ public class UserController {
         return "ok";
     }
 
+    @GetMapping("/testError")
+    @ResponseBody
+    public String testError() {
+        int i = 1 / 0;
+        return "ok";
+    }
 
 }

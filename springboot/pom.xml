@@ -101,6 +101,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.fang</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
