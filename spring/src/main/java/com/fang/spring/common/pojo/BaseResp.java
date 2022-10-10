@@ -15,7 +15,7 @@ public class BaseResp<T>implements Serializable {
 
     public static final String SUCCESS_CODE = "200";
 
-    public static final String FAIL_CODE = "200";
+    public static final String FAIL_CODE = "100";
 
     public static final String SUCCESS_MES = "操作成功";
 

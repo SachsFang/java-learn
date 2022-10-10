@@ -33,6 +33,16 @@ public final class BaseRespBuilder {
         return this;
     }
 
+    public BaseRespBuilder setCode(String code) {
+        this.baseResp.setCode(code);
+        return this;
+    }
+
+    public BaseRespBuilder setMsg(String msg) {
+        this.baseResp.setMsg(msg);
+        return this;
+    }
+
     public <T> BaseResp<T> build() {
         return this.baseResp;
     }
