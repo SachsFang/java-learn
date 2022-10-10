@@ -155,7 +155,8 @@ public class UserController {
         log.info("<1>插入一条用户信息");
         Thread.sleep(1000);
         log.info("<2>插入成功");
-        applicationContext.publishEvent(new UserEvent("fang", "发送了事件"));
+//        applicationContext.publishEvent(new UserEvent("fang", "发送了事件"));
+        SpringContextManager.getApplicationContext().publishEvent(new UserEvent("fang", "发送了事件"));
         log.info("<4>操作完成");
         return "ok";
     }
