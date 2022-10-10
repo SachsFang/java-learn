@@ -1,4 +1,4 @@
-package com.fang.springboot.user;
+package com.fang.springboot.user.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

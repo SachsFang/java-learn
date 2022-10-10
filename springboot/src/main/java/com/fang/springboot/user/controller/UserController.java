@@ -1,13 +1,16 @@
 package com.fang.springboot.user.controller;
 
-import com.fang.springboot.user.User;
+import com.fang.springboot.common.util.SpringContextManager;
+import com.fang.springboot.user.pojo.User;
 import com.fang.springboot.user.listener.UserEventListener;
+import com.fang.springboot.user.pojo.UserEvent;
 import com.fang.springboot.user.properties.UserConfig;
 import com.fang.springboot.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +36,12 @@ public class UserController {
     @Autowired
     UserEventListener userEventListener;
 
+    /**
+     * 获取Spring上下文环境也可以使用注入的形式
+     */
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Value("${sachs.name}")
     private String userConfigName;
 
@@ -44,6 +53,7 @@ public class UserController {
 
     /**
      * 使用 @Value 获取配置
+     *
      * @return
      */
     @RequestMapping("/getUserConfig1")
@@ -54,6 +64,7 @@ public class UserController {
 
     /**
      * 使用 @ConfigurationProperties 获取配置
+     *
      * @return
      */
     @RequestMapping("/getUserConfig2")
@@ -121,7 +132,6 @@ public class UserController {
         return "/user/index";
     }
 
-
     @GetMapping("/testLog")
     @ResponseBody
     public String testLog() {
@@ -130,7 +140,6 @@ public class UserController {
     }
 
     @GetMapping("/textAsync")
-    @ResponseBody
     public String testAsync() throws InterruptedException {
         log.info("<1>插入一条用户信息");
         Thread.sleep(1000);
@@ -139,5 +148,17 @@ public class UserController {
         log.info("<4>操作完成");
         return "ok";
     }
+
+    @GetMapping("/textListener")
+    @ResponseBody
+    public String testListener(UserEvent userEvent) throws InterruptedException {
+        log.info("<1>插入一条用户信息");
+        Thread.sleep(1000);
+        log.info("<2>插入成功");
+        applicationContext.publishEvent(new UserEvent("fang", "发送了事件"));
+        log.info("<4>操作完成");
+        return "ok";
+    }
+
 
 }
