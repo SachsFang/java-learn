@@ -1,7 +1,7 @@
 package com.fang.springboot.common.controller;
 
-import com.fang.spring.common.builder.BaseRespBuilder;
-import com.fang.spring.common.pojo.BaseResp;
+import com.fang.springboot.common.builder.BaseRespBuilder;
+import com.fang.springboot.common.pojo.BaseResp;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

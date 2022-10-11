@@ -86,8 +86,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.13</version>
-            <scope>compile</scope>
         </dependency>
         <!--log4j日志框架-->
         <dependency>
@@ -100,10 +98,6 @@
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.fang</groupId>
-            <artifactId>spring</artifactId>
         </dependency>
     </dependencies>
 
