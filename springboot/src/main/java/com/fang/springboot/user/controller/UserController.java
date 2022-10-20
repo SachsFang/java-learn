@@ -1,5 +1,6 @@
 package com.fang.springboot.user.controller;
 
+import com.fang.springboot.common.pojo.BaseResp;
 import com.fang.springboot.common.util.SpringContextManager;
 import com.fang.springboot.user.pojo.User;
 import com.fang.springboot.user.listener.UserEventListener;
@@ -11,11 +12,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.annotation.XmlElementRef;
@@ -35,13 +38,16 @@ public class UserController {
     private UserConfig userConfig;
 
     @Autowired
-    UserEventListener userEventListener;
+    private UserEventListener userEventListener;
 
     /**
      * 获取Spring上下文环境也可以使用注入的形式
      */
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Value("${sachs.name}")
     private String userConfigName;
@@ -51,6 +57,8 @@ public class UserController {
 
     @Value("${sachs.sex}")
     private String userConfigSex;
+
+    private String TEST_URL = "https://adssx-test-gzdevops.tsintergy.com/usercenter/web/pf/login/info/publicKey";
 
     /**
      * 使用 @Value 获取配置
@@ -167,6 +175,16 @@ public class UserController {
     public String testError() {
         int i = 1 / 0;
         return "ok";
+    }
+
+    @GetMapping("/testRestTemplate")
+    @ResponseBody
+    public String testRestTemplate() {
+        ResponseEntity<BaseResp> response = restTemplate.getForEntity(TEST_URL, BaseResp.class);
+        BaseResp baseResp = response.getBody();
+        assert baseResp != null;
+        log.info(baseResp.getData().toString());
+        return baseResp.getData().toString();
     }
 
 }

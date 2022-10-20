@@ -42,4 +42,4 @@ com/sun/proxy
 *.class
 
 ### log ###
-*/log
+**/log

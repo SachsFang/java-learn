@@ -1,1 +1,2 @@
 WEB_PORT: 8090
+LOG_REQUEST: true

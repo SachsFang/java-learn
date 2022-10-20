@@ -3,3 +3,5 @@ server:
   servlet:
     # 设置springboot项目访问路径
     context-path: /learn
+rest-template:
+  log-request: ${LOG_REQUEST:false}
