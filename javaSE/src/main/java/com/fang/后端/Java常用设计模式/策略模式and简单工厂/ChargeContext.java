@@ -12,6 +12,7 @@ public class ChargeContext {
 
     /**
      * 简单工厂模式结合-构造方法
+     * ps:可以用反射优化简单工厂的switch语句
      * @param type
      */
     public ChargeContext(String type) {
