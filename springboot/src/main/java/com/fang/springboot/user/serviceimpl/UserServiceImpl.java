@@ -11,17 +11,26 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import javax.jws.WebService;
+
 /**
  * @author shaobin
  * @date 2022/8/5 20:06
  */
 @Service
+@WebService
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
     @Autowired
     TransactionalUtils transactionalUtils;
+
+    @Override
+    public String printInfo() {
+        System.out.println("call this service success");
+        return "server execute success";
+    }
 
     @Override
     public int insertUser(String name, Integer age) {
