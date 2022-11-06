@@ -30,6 +30,11 @@ public class BaseExample {
         userNameField.setAccessible(true);// 因为是私有属性，所以需要设置可访问权限
         userNameField.set(userEntity, "userName");
         System.out.println(userEntity);
+        //获取静态变量
+        Field numberField = userEntityClass.getDeclaredField("number");
+        numberField.setAccessible(true);
+        Object number = numberField.get(null);
+        System.out.println(number);
         // 调用私有方法
         Method setUserNameMethod = userEntityClass.getDeclaredMethod("privateSetUserName", String.class);
         setUserNameMethod.setAccessible(true);

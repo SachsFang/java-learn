@@ -8,6 +8,8 @@ public class UserEntity {
     private String userName;
     private int age;
 
+    private static final int number = 1;
+
     public UserEntity(String userName, int age) {
         this.userName = userName;
         this.age = age;
