@@ -1,4 +1,4 @@
-package com.fang.spring.aop;
+package com.fang.spring.aop_test;
 
 import com.fang.spring.user.pojo.User;
 import com.fang.spring.user.service.UserService;

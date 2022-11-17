@@ -28,9 +28,11 @@ public class AnnotationConfigAspect {
         System.out.println(",被织入增强处理的目标方法为：" + joinPoint.getSignature().getName());
     }
     // 后置通知
-    @AfterReturning(value = "myPointCut()")
-    public void myAfterReturning(JoinPoint joinPoint) {
+    @AfterReturning(value = "myPointCut() && (args(*, id, ..) || args(.., id, *) || args(id))", returning = "returnResult")// args为参数限制，并且如果在后置通知方法中声明可读取参数
+    public void myAfterReturning(JoinPoint joinPoint, String id, Object returnResult) {
         System.out.print("后置通知：模拟记录日志...,");
+        System.out.println("id参数为: " + id);
+        System.out.println("返回结果为:" + returnResult);
         System.out.println("被织入增强处理的目标方法为："
                 + joinPoint.getSignature().getName());
     }
