@@ -1,4 +1,4 @@
-package com.fang.springboot.common.controller;
+package com.fang.springboot.common.controller_advice;
 
 import com.fang.springboot.common.builder.BaseRespBuilder;
 import com.fang.springboot.common.pojo.BaseResp;

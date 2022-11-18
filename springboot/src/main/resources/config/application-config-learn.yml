@@ -1,3 +1,8 @@
+### 本项目配置
+learn:
+  template:
+    template-path: D:\ideaProject\myself\java-learn\springboot\src\main\resources\template_file
+### spring配置
 spring:
   application:
     name: springboot-learn
