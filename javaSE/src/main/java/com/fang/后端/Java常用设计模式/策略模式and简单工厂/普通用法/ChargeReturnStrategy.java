@@ -1,4 +1,4 @@
-package com.fang.后端.Java常用设计模式.策略模式and简单工厂;
+package com.fang.后端.Java常用设计模式.策略模式and简单工厂.普通用法;
 
 import java.math.BigDecimal;
 
@@ -14,7 +14,7 @@ public class ChargeReturnStrategy extends ChargeStrategy {
         this.moneyReturn = moneyReturn;
     }
     @Override
-    BigDecimal calcResult(BigDecimal money) {
+    public BigDecimal calcResult(BigDecimal money) {
         BigDecimal result = money;
         if (money.compareTo(moneyCondition) > -1) {
             result = money.subtract(moneyReturn);
