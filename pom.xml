@@ -21,13 +21,12 @@
         <module>spring</module>
         <module>springboot</module>
         <module>javaSE</module>
-        <module>dubbo</module>
+        <module>micro-services</module>
     </modules>
 
     <properties>
         <java.version>1.8</java.version>
         <java-learn.version>1.0.0</java-learn.version>
-        <spring.boot.version>2.1.8.RELEASE</spring.boot.version>
     </properties>
 
 </project>
