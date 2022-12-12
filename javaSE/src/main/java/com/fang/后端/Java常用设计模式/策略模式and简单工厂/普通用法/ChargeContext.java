@@ -1,4 +1,5 @@
-package com.fang.后端.Java常用设计模式.策略模式and简单工厂;
+package com.fang.后端.Java常用设计模式.策略模式and简单工厂.普通用法;
+
 
 import java.math.BigDecimal;
 
@@ -18,9 +19,9 @@ public class ChargeContext {
     public ChargeContext(String type) {
         switch (type) {
             case "rebate":
-                chargeStrategy = new ChargeRebateStrategy(new BigDecimal(0.8)); break;
+                chargeStrategy = new ChargeRebateStrategy(BigDecimal.valueOf(0.8)); break;
             case "return":
-                chargeStrategy = new ChargeReturnStrategy(new BigDecimal(300), new BigDecimal(100)); break;
+                chargeStrategy = new ChargeReturnStrategy(BigDecimal.valueOf(300), BigDecimal.valueOf(100)); break;
             default:
                 chargeStrategy = new ChargeNormalStrategy();
         }
