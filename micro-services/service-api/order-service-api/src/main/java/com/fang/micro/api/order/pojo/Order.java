@@ -1,4 +1,4 @@
-package com.fang.api.order.pojo;
+package com.fang.micro.api.order.pojo;
 
 import lombok.Data;
 

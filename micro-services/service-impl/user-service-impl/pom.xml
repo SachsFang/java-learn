@@ -3,22 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>micro-services</artifactId>
+        <artifactId>service-impl</artifactId>
         <groupId>com.fang</groupId>
         <version>${java-learn.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-impl</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>order-service-impl</module>
-        <module>user-service-impl</module>
-    </modules>
+    <artifactId>user-service-impl</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.fang</groupId>
-            <artifactId>service-api</artifactId>
+            <artifactId>user-service-api</artifactId>
             <version>${java-learn.version}</version>
             <scope>compile</scope>
         </dependency>

@@ -5,11 +5,16 @@
     <parent>
         <artifactId>micro-services</artifactId>
         <groupId>com.fang</groupId>
-        <version>1.0.0</version>
+        <version>${java-learn.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>service-api</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>user-service-api</module>
+        <module>order-service-api</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

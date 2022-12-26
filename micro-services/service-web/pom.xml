@@ -9,19 +9,26 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-impl</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>order-service-impl</module>
-        <module>user-service-impl</module>
-    </modules>
+    <artifactId>service-web</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.fang</groupId>
-            <artifactId>service-api</artifactId>
+            <artifactId>order-service-api</artifactId>
             <version>${java-learn.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.fang</groupId>
+            <artifactId>order-service-impl</artifactId>
+            <version>${java-learn.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
     </dependencies>
 
     <properties>
