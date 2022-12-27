@@ -18,7 +18,6 @@ import javax.jws.WebService;
  * @date 2022/8/5 20:06
  */
 @Service
-@WebService
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;

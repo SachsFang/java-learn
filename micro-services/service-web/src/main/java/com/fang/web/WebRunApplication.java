@@ -10,9 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan({"com.fang.web", "com.fang.micro.api.order", "com.fang.micro.impl.order"})
-public class WebApplication {
+public class WebRunApplication {
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(WebApplication.class);
+        SpringApplication springApplication = new SpringApplication(WebRunApplication.class);
         springApplication.run(args);
     }
 }

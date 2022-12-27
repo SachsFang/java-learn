@@ -33,11 +33,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.fang</groupId>
-            <artifactId>springboot</artifactId>
-            <version>${java-learn.version}</version>
-        </dependency>
     </dependencies>
 
     <properties>
