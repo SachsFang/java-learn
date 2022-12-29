@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: user-micro-service
+  cloud:
+    nacos:
+      discovery:
+        ### 服务注册地址
+        server-addr: 127.0.0.1:8848
+    compatibility-verifier.enabled: false
+
+#  datasource:
+#    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+#    username: root
+#    password: 123456
+#    driver-class-name: com.mysql.jdbc.Driver
+server:
+  port: ${WEB_PORT:8098}
+  servlet:
+    context-path: /learn

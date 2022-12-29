@@ -15,8 +15,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <spring.version>5.1.9.RELEASE</spring.version>
-        <spring.boot.version>2.0.0.RELEASE</spring.boot.version>
+        <spring.version>5.0.4.RELEASE</spring.version>
         <spring.cloud.alibaba.version>2.2.9.RELEASE</spring.cloud.alibaba.version>
         <cglib.version>3.2.12</cglib.version>
         <lombok.version>1.18.10</lombok.version>
@@ -188,6 +187,11 @@
                 <optional>true</optional>
             </dependency>
             <!--微服务相关-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-commons</artifactId>
+                <version>3.0.4</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
