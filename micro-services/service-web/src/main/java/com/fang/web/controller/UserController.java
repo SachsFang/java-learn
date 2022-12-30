@@ -2,11 +2,10 @@ package com.fang.web.controller;
 
 import com.fang.micro.api.user.UserService;
 import com.fang.micro.api.user.pojo.User;
+import com.fang.web.feign.UserServiceFeign;
 import com.fang.web.my_load_balance.LoadBalanceStrategy;
-import com.fang.web.my_load_balance.RandomLoadBalanceStrategy;
 import com.fang.web.my_load_balance.RoundLoadBalanceStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -40,7 +39,18 @@ public class UserController {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
-    @RequestMapping("getUerInfoByNacosProvider")
+    @Autowired
+    private UserServiceFeign userServiceFeign;
+
+    @RequestMapping("/getUserInfoByNacosProviderByFeign")
+    public User getUerInfoByNacosProviderByFeign() {
+        // 原理是使用AOP拦截@FeignClient注解生成代理类，通过服务名获取服务集群的url地址列表，
+        // 并通过负载均衡算法选出一个url地址+path路径+类和方法上@RequestMapping注解的路径
+        // 拼接除一个服务请求的具体url，然后通过http client方式进行服务请求
+        return userServiceFeign.getUserInfo();
+    }
+
+    @RequestMapping("/getUerInfoByNacosProvider")
     public User getUerInfoByNacosProvider() {
         // 根据服务名称从服务中心获取接口地址集群列表
         List<ServiceInstance> serviceInstanceList = discoveryClient.getInstances("user-micro-service");
@@ -66,7 +76,7 @@ public class UserController {
     @RequestMapping("/gerUserInfoByWebServer")
     public User getUserInfoByWebServer() throws MalformedURLException {
         // 提供服务方通过发布wsdl文件注册到WebService目录，调用方服务通过WebService目录获取对应服务的wsdl文件信息进行服务的调用（http+xml的调用方式）
-        URL url = new URL("http://127.0.0.1:8099/service/userServiceImpl?wsdl");
+        URL url = new URL("http://127.0.0.1:8097/service/userServiceImpl?wsdl");
         QName serviceQName = new QName(serviceUrl, "UserServiceImplService");
         Service service = Service.create(url, serviceQName);
         QName portQName = new QName(serviceUrl, "UserServiceImplPort");
