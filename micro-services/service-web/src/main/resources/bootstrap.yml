@@ -1,14 +1,15 @@
 spring:
   application:
-    name: micro-services
-  main:
-    allow-bean-definition-overriding: true
+    name: micro-services-web
   cloud:
     nacos:
       discovery:
         ### 服务注册地址
         server-addr: 127.0.0.1:8848
-    compatibility-verifier.enabled: false
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+#    compatibility-verifier.enabled: false
 
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
