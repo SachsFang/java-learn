@@ -9,8 +9,10 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yaml
-#    compatibility-verifier.enabled: false
-
+    compatibility-verifier.enabled: false
+  # 文件组合规则：application.name-profiles.active-cloud.nacos.config.file-extension
+  profiles:
+    active: dev
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
