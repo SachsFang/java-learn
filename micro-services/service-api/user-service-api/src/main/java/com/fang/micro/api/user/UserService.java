@@ -15,6 +15,6 @@ import javax.jws.WebService;
 public interface UserService {
 
     @WebMethod(operationName = "getUserInfo")
-    @RequestMapping("/getUserInfo")
+        @RequestMapping("/getUserInfo")
     User getUserInfo();
 }
