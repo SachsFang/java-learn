@@ -17,19 +17,27 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class CurrentLimitRuleConfig {
+
+    private final static String GET_USER_RESOURCE = "getUser";
+
     public CurrentLimitRuleConfig() {
-        initCurrentLimitRuleConfig();
+        List<String> resourceList = new ArrayList<>();
+        resourceList.add("getUser");
+        resourceList.add("insertUser");
+        initCurrentLimitRuleConfig(resourceList, 1);
     }
 
-    public void initCurrentLimitRuleConfig() {
+    public void initCurrentLimitRuleConfig(List<String> resources, int qbs) {
         List<FlowRule> rules = new ArrayList<>();
-        FlowRule ruleOne = new FlowRule();
-        ruleOne.setResource("/getUser");
-        ruleOne.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        // Qps控制在1
-        ruleOne.setCount(1);
-        ruleOne.setLimitApp("default");
-        rules.add(ruleOne);
+        resources.forEach(resource -> {
+            FlowRule rule = new FlowRule();
+            rule.setResource(resource);
+            rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+            // Qps控制在1
+            rule.setCount(qbs);
+            rule.setLimitApp("default");
+            rules.add(rule);
+        });
         FlowRuleManager.loadRules(rules);
         log.info("初始化配置限流策略成功！");
     }
