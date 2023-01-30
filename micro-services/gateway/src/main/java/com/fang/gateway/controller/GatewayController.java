@@ -42,7 +42,7 @@ public class GatewayController {
 
     /**
      * 限流 - 注解方式
-     * @SentinelResource blockHandler-限流、熔断出现异常执行的方法    fallback-服务降级（限流、熔断、接口超时、接口出现异常）执行的方法
+     * @SentinelResource blockHandler-针对BlockException异常回调的方法    fallback-针对所有所有类型的异常回调的方法
      * @return
      */
     @RequestMapping(value = "/insertUser")
@@ -52,7 +52,7 @@ public class GatewayController {
     }
 
     /**
-     * 限流 - 注解方式（不在代码中配置，在sentinel控制台中配置，ps:sentinel默认没有持久化）
+     * 限流 - 注解方式（不在代码中配置，在sentinel控制台中配置，ps:sentinel默认没有持久化，默认从注册的服务中拿取规则数据，可持久化到nacos）
      */
     @RequestMapping(value = "/test")
     @SentinelResource(value = "test", blockHandler = "noParamBlockHandler")

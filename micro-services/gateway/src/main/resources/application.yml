@@ -2,11 +2,10 @@ spring:
   application:
     name: gateway-micro-service
   cloud:
-    # 启动sentinel-dashboard命令：java -Dserver.port=8060 -jar sentinel-dashboard-1.8.5.jar
+    # 启动sentinel-dashboard命令【-Dcsp.sentinel.api.port为api通讯的端口号】：java -Dserver.port=8718 -Dcsp.sentinel.api.port=8719 -jar sentinel-dashboard-1.8.5.jar
     sentinel:
       transport:
-        dashboard: localhost:8060
-      eager: true
+        dashboard: localhost:8718
     nacos:
       discovery:
         # 服务注册地址
