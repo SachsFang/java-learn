@@ -18,8 +18,6 @@ import java.util.List;
 @Slf4j
 public class CurrentLimitRuleConfig {
 
-    private final static String GET_USER_RESOURCE = "getUser";
-
     public CurrentLimitRuleConfig() {
         List<String> resourceList = new ArrayList<>();
         resourceList.add("getUser");
