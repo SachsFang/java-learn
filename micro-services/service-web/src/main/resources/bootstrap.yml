@@ -13,11 +13,6 @@ spring:
   # 文件组合规则：application.name-profiles.active-cloud.nacos.config.file-extension
   profiles:
     active: dev
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
 server:
   port: 8095
   servlet:

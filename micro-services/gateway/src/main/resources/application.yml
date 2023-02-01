@@ -2,7 +2,7 @@ spring:
   application:
     name: gateway-micro-service
   cloud:
-    # 启动sentinel-dashboard命令【-Dcsp.sentinel.api.port为api通讯的端口号】：java -Dserver.port=8718 -Dcsp.sentinel.api.port=8719 -jar sentinel-dashboard-1.8.5.jar
+    # 启动sentinel-dashboard命令：java -Dserver.port=8718 -jar sentinel-dashboard-1.8.5.jar
     sentinel:
       transport:
         dashboard: localhost:8718
@@ -24,7 +24,7 @@ spring:
           # 转发地址
           uri: https://www.baidu.com
           filters:
-            - StripPrefix=1 #当访问localhost:80/test/**时，就会转化为https://www.baidu.com/test/**转发，但是这是个无效地址，所以要通过StripPrefix=1去除uri的第一个前缀改为https://www.baidu.com/**进行转发
+            - StripPrefix=1 #当访问localhost:80/test/**时，就会转化为https://www.baidu .com/test/**转发，但是这是个无效地址，所以要通过StripPrefix=1去除uri的第一个前缀改为https://www.baidu.com/**进行转发
           # 断言（匹配规则）
           predicates:
             - Path=/test/**

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2022/12/26 10:17
  */
 @SpringBootApplication
-@ComponentScan({"com.fang.web", "com.fang.micro.api.order"})
+//@ComponentScan({"com.fang.web"})
 @EnableFeignClients //开启feign client
 public class WebRunApplication {
     public static void main(String[] args) {

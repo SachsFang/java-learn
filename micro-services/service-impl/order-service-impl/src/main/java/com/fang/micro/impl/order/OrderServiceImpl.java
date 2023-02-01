@@ -2,7 +2,11 @@ package com.fang.micro.impl.order;
 
 import com.fang.micro.api.order.OrderService;
 import com.fang.micro.api.order.pojo.Order;
+import com.fang.micro.impl.order.dao.OrderDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author shaobin
@@ -10,11 +14,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    @Autowired
+    private OrderDAO orderDAO;
+
     @Override
-    public Order getOrderInfo() {
-        Order order = new Order();
-        order.setCode("111");
-        order.setRemark("订单1");
-        return order;
+    public List<Order> getOrderList() {
+        return orderDAO.getOrderList();
     }
+
+    @Override
+    public int insertOrder(Order order) {
+        return orderDAO.insertOrder(order);
+    }
+
 }

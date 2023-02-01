@@ -2,9 +2,10 @@ package com.fang.micro.impl.user;
 
 import com.fang.micro.api.user.UserService;
 import com.fang.micro.api.user.pojo.User;
+import com.fang.micro.impl.user.dao.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.jws.WebService;
@@ -20,6 +21,9 @@ public class UserServiceImpl implements UserService {
     @Value("${server.port}")
     private String port;
 
+    @Autowired
+    private UserDAO userDAO;
+
     @Override
     public User getUserInfo() {
         User user = new User();
@@ -27,5 +31,10 @@ public class UserServiceImpl implements UserService {
         user.setName("fang");
         user.setPort(port);
         return user;
+    }
+
+    @Override
+    public int insertUser(String name, Integer age) {
+        return userDAO.insertUser(name, age);
     }
 }
