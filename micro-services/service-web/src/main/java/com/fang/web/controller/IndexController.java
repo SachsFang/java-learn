@@ -3,6 +3,7 @@ package com.fang.web.controller;
 import com.fang.micro.api.order.pojo.Order;
 import com.fang.web.feign.OrderServiceFeign;
 import com.fang.web.feign.UserServiceFeign;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -40,7 +41,8 @@ public class IndexController {
     /**
      * 分布式事务测试
      */
-    @Transactional
+//    @Transactional
+    @GlobalTransactional
     @RequestMapping("/distributedTransactional")
     public void distributedTransactional() {
         userServiceFeign.insertUser("distributedTransactional", 20);

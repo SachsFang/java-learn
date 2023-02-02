@@ -3,6 +3,7 @@ package com.fang.micro.impl.order;
 import com.fang.micro.api.order.OrderService;
 import com.fang.micro.api.order.pojo.Order;
 import com.fang.micro.impl.order.dao.OrderDAO;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @GlobalTransactional
     public int insertOrder(Order order) {
         return orderDAO.insertOrder(order);
     }

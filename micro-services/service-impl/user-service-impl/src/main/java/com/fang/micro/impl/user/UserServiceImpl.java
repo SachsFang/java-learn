@@ -3,6 +3,7 @@ package com.fang.micro.impl.user;
 import com.fang.micro.api.user.UserService;
 import com.fang.micro.api.user.pojo.User;
 import com.fang.micro.impl.user.dao.UserDAO;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @GlobalTransactional
     public int insertUser(String name, Integer age) {
         return userDAO.insertUser(name, age);
     }

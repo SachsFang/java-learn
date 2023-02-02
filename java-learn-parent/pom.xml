@@ -222,6 +222,12 @@
                 <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
                 <version>${spring.cloud.alibaba.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                <!--比2.2.3.RELEASE低的版本会有比较多问题-->
+                <version>2.2.3.RELEASE</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
