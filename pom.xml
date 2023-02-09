@@ -22,7 +22,6 @@
         <module>springboot</module>
         <module>javaSE</module>
         <module>micro-services</module>
-        <module>micro-services/service-api/order-service-api</module>
     </modules>
 
     <properties>

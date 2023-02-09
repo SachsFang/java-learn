@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: user-micro-service
+  # springboot和springCloud版本不对应兼容
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        ### 服务注册地址
+        server-addr: 127.0.0.1:8848
+    compatibility-verifier.enabled: false
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+server:
+  port: ${WEB_PORT:8098}
+  servlet:
+    context-path: /learn
+seata:
+  enabled: true
+  enable-auto-data-source-proxy: true
+  tx-service-group: my_test_tx_group
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      namespace: eaafacdc-fcbc-48d8-8964-a872b6134242
+      username: nacos
+      password: nacos
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      namespace: eaafacdc-fcbc-48d8-8964-a872b6134242
+      username: nacos
+      password: nacos
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+    disable-global-transaction: false
+  client:
+    rm:
+      report-success-enable: false

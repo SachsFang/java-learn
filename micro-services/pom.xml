@@ -13,10 +13,8 @@
     <artifactId>micro-services</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>service-api</module>
-        <module>service-impl</module>
-        <module>service-web</module>
-        <module>gateway</module>
+        <module>springcloud</module>
+        <module>dubbo</module>
     </modules>
     <dependencies>
         <dependency>
