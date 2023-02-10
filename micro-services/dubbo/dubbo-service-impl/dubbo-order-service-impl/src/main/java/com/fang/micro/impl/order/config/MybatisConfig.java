@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @Configuration
 //开启事务
 @EnableTransactionManagement
-@MapperScan("com.fang.micro.impl.user.dao")
+@MapperScan("com.fang.micro.impl.order.dao")
 public class MybatisConfig {
 
     @Bean

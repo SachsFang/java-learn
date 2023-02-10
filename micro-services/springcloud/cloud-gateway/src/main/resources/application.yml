@@ -47,3 +47,6 @@ spring:
             - Path=/learn/user/**
 server:
   port: 80
+
+# 测试地址：
+# http://localhost/learn/user/getUserInfo?token=1

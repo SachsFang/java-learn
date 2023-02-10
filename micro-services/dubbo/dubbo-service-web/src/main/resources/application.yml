@@ -1,3 +1,13 @@
-### 写在nacos config的配置
-#author:
-#  name: shaobin
+spring:
+  application:
+    name: micro-services-web
+server:
+  port: 8095
+  servlet:
+    context-path: /learn
+dubbo:
+  application:
+    name: dubbo-web-consumer
+  #注册中心地址
+  registry:
+    address: zookeeper://127.0.0.1:2181

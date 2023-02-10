@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import java.util.List;
 
 /**
  * @author shaobin
@@ -20,6 +21,8 @@ public interface UserService {
     @WebMethod(operationName = "getUserInfo")
     @RequestMapping("/getUserInfo")
     User getUserInfo();
+
+    List<User> getUserInfoList();
 
     @RequestMapping("/insertUser")
     int insertUser(@RequestParam("name") String name, @RequestParam("age") Integer age);
