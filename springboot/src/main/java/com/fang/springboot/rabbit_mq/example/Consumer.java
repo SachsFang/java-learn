@@ -23,15 +23,18 @@ public class Consumer {
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 System.out.println("消费者获取消息并消费：" + new String(body, StandardCharsets.UTF_8));
                 try {
-                    // 因为设置了autoAsk所以接收到消息直接确认给队列删除消息，所以后面的业务逻辑是在ask后执行的
-                    Thread.sleep(3000);
+                    // 如果设置了autoAsk=true的情况下接收到消息直接确认给队列删除消息，所以并不会以下的业务逻辑代码
+                    // 如果设置了autoAsk=false的情况下，需要发送ask请求给服务器端确认消费完成然后删除队列中的消息，所以需要走完一下的业务逻辑代码，便可处理消费失败的情况
+                    Thread.sleep(1000); //业务逻辑代码模拟
+                    channel.basicAck(envelope.getDeliveryTag(), false);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
         };
         // 设置监听的队列
-        // autoAck：自动签收（消费者获取到消息成功后就自动ack，服务端的队列就会自动删除；因为设置为true无法处理消费者消费失败的情况，所以在实际开发中一般设为false，待消费者成功消费后手动ack）
-        channel.basicConsume(RabbitMqUtil.QUEUE_NAME, true, defaultConsumer);
+        // autoAck：true为自动签收，false为手动应答（消费者获取到消息成功后就自动ack，服务端的队列就会自动删除；因为设置为true无法处理消费者消费失败的情况，所以在实际开发中一般设为false，待消费者成功消费后手动ack）
+//        channel.basicConsume(RabbitMqUtil.QUEUE_NAME, true, defaultConsumer);
+        channel.basicConsume(RabbitMqUtil.QUEUE_NAME, false, defaultConsumer);
     }
 }
