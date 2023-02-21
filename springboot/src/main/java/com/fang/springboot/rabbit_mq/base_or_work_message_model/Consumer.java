@@ -1,4 +1,4 @@
-package com.fang.springboot.rabbit_mq.example;
+package com.fang.springboot.rabbit_mq.base_or_work_message_model;
 
 import com.fang.springboot.rabbit_mq.RabbitMqUtil;
 import com.rabbitmq.client.*;
@@ -34,6 +34,7 @@ public class Consumer {
         };
         // 设置监听的队列
         // autoAck：true为自动签收，false为手动应答（消费者获取到消息成功后就自动ack，服务端的队列就会自动删除；因为设置为true无法处理消费者消费失败的情况，所以在实际开发中一般设为false，待消费者成功消费后手动ack）
+        // autoAck为true时，消息模型为基本消息模型（点对点）；为false时，消息模型为工作队列
 //        channel.basicConsume(RabbitMqUtil.QUEUE_NAME, true, defaultConsumer);
         channel.basicConsume(RabbitMqUtil.QUEUE_NAME, false, defaultConsumer);
     }

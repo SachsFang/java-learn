@@ -1,4 +1,4 @@
-package com.fang.springboot.rabbit_mq.example;
+package com.fang.springboot.rabbit_mq.base_or_work_message_model;
 
 import com.fang.springboot.rabbit_mq.RabbitMqUtil;
 import com.rabbitmq.client.Channel;
