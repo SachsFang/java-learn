@@ -11,6 +11,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>springboot</artifactId>
+    // 坑：这里运行的jar项目不能用pom类型，否则配置文件application会失效
+<!--    <packaging>pom</packaging>-->
 
     <dependencies>
         <dependency>
@@ -96,10 +98,6 @@
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
         </dependency>
     </dependencies>
 
