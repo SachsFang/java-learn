@@ -1,6 +1,6 @@
-package com.fang.springboot.rabbit_mq.base_or_work_message_model;
+package com.fang.rabbitmq.base_or_work_message_model;
 
-import com.fang.springboot.rabbit_mq.RabbitMqUtil;
+import com.fang.rabbitmq.RabbitMqUtil;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;

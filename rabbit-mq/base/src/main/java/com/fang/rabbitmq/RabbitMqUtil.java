@@ -1,4 +1,4 @@
-package com.fang.springboot.rabbit_mq;
+package com.fang.rabbitmq;
 
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
