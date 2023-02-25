@@ -1,6 +1,11 @@
 spring:
   application:
     name: rabbitmq-consumer-one
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn_data}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
   rabbitmq:
     ####连接地址
     host: 127.0.0.1
@@ -12,6 +17,17 @@ spring:
     password: guest
     ### 地址
     virtual-host: /springboot
+    listener:
+      simple:
+        retry:
+          # 开启重试机制（报错的情况下会进行重试）（默认开启）
+          enabled: true
+          # 最大重试次数（默认下是无线次重试）
+          max-attempts: 5
+          # 重试间隔时间
+          initial-interval: 1000
+        # ack消息确认机制确认方式
+        acknowledge-mode: manual
 server:
   port: 9001
   servlet:
