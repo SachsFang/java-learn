@@ -25,7 +25,11 @@ public class IndexController {
         user.setName("发送消息成功");
         user.setAge(25);
         user.setSex(1);
-        amqpTemplate.convertAndSend(RabbitMqConfig.SPRINGBOOT_EXCHANGE, "", user);
+        amqpTemplate.convertAndSend(RabbitMqConfig.SPRINGBOOT_EXCHANGE, "", user, message -> {
+            // 设置消息5秒过期,过期后给死信队列消费
+            message.getMessageProperties().setExpiration("10000");
+            return message;
+        });
         return "ok";
     }
 }

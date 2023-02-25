@@ -13,9 +13,10 @@
     <packaging>pom</packaging>
     <modules>
         <module>base</module>
+        <module>rabbitmq-producer</module>
         <module>rabbitmq-consumer-one</module>
         <module>rabbitmq-consumer-two</module>
-        <module>rabbitmq-producer</module>
+        <module>rabbitmq-consumer-dead</module>
     </modules>
 
     <properties>
