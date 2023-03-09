@@ -1,23 +1,20 @@
 package com.fang.springboot.user.serviceimpl;
 
 import com.fang.springboot.common.annotation.MyTransactional;
+import com.fang.springboot.common.util.TransactionalUtils;
 import com.fang.springboot.user.dao.UserDAO;
 import com.fang.springboot.user.service.UserService;
-import com.fang.springboot.common.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import javax.jws.WebService;
-
 /**
  * @author shaobin
  * @date 2022/8/5 20:06
  */
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;

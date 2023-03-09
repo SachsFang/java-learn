@@ -2,14 +2,15 @@ package com.fang.springboot.user.controller;
 
 import com.fang.springboot.common.pojo.BaseResp;
 import com.fang.springboot.common.util.SpringContextManager;
-import com.fang.springboot.user.pojo.User;
 import com.fang.springboot.user.listener.UserEventListener;
+import com.fang.springboot.user.pojo.User;
 import com.fang.springboot.user.pojo.UserEvent;
 import com.fang.springboot.user.properties.UserConfig;
 import com.fang.springboot.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.annotation.XmlElementRef;
 
 /**
  * @author shaobin
@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlElementRef;
 @Slf4j
 public class UserController {
     @Autowired
+    @Qualifier("userService")
     private UserService userService;
 
     @Autowired
