@@ -11,6 +11,7 @@ import org.apache.http.ssl.SSLContexts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -33,6 +34,7 @@ public class CommonRestTemplateConfig {
     private Boolean logRequest;
 
     @Bean
+    @Primary // 当与依赖包的实例化的RestTemplate对象冲突时，可使用@Primary注解指定主实现
     public RestTemplate myRestTemplate(ClientHttpRequestFactory factory) {
         RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(factory));
         if (logRequest) {
