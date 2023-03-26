@@ -1,6 +1,9 @@
 package com.fang.springboot.common.config;
 
 import com.fang.springboot.common.intercepter.LoggingHttpRequestInterceptor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.NoHttpResponseException;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -28,6 +31,7 @@ import java.util.List;
  * @date 2022/10/20 10:20
  */
 @Configuration
+@Slf4j
 public class CommonRestTemplateConfig {
 
     @Value("${rest-template.log-request}")
@@ -53,7 +57,17 @@ public class CommonRestTemplateConfig {
         SSLConnectionSocketFactory connectionSocketFactory = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
         httpClientBuilder.setSSLSocketFactory(connectionSocketFactory);
-        CloseableHttpClient httpClient = httpClientBuilder.build();
+        CloseableHttpClient httpClient = httpClientBuilder.setRetryHandler((exception, executionCount, context) -> {
+            if (executionCount > 3) {
+                log.warn("Maximum tries reached for client http pool");
+                return false;
+            }
+            if (exception instanceof NoHttpResponseException || exception instanceof ConnectTimeoutException) {
+                log.warn("NoHttpResponseException retry " + executionCount + " call");
+                return true;
+            }
+            return false;
+        }).build();
         // build ClientHttpRequestFactory
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setHttpClient(httpClient);
