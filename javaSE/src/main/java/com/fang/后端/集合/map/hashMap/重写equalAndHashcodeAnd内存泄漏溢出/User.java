@@ -1,13 +1,6 @@
-package com.fang.后端.内存泄漏溢出;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+package com.fang.后端.集合.map.hashMap.重写equalAndHashcodeAnd内存泄漏溢出;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author shaobin
