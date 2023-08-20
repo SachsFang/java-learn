@@ -1,6 +1,7 @@
 package com.fang.springboot.user.controller;
 
 import com.fang.springboot.common.pojo.BaseResp;
+import com.fang.springboot.common.service.MultiThreadService;
 import com.fang.springboot.common.util.SpringContextManager;
 import com.fang.springboot.user.listener.UserEventListener;
 import com.fang.springboot.user.pojo.User;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author shaobin
@@ -40,6 +43,9 @@ public class UserController {
 
     @Autowired
     private UserEventListener userEventListener;
+
+    @Autowired
+    private MultiThreadService multiThreadService;
 
     /**
      * 获取Spring上下文环境也可以使用注入的形式
@@ -186,6 +192,27 @@ public class UserController {
         assert baseResp != null;
         log.info(baseResp.getData().toString());
         return baseResp.getData().toString();
+    }
+
+    @GetMapping("/testMultiThreadService")
+    @ResponseBody
+    public String testMultiThreadService() {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(i);
+        }
+        long startTime = System.currentTimeMillis();
+        List<Integer> resultList = multiThreadService.asyncForEach(list, item -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return item;
+        });
+        long endTime = System.currentTimeMillis();
+        System.out.println(endTime - startTime);
+        return resultList.toString();
     }
 
 }

@@ -3,10 +3,13 @@ package com.fang.springboot.common.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author shaobin
@@ -58,6 +61,40 @@ public class ThreadPoolConfig {
         // 等待所有任务结束后再关闭线程池
         executor.setWaitForTasksToCompleteOnShutdown(true);
         return executor;
+    }
+
+    /**
+     * 创建线程池
+     */
+    @Bean("main-executorService")
+    public ExecutorService mainExecutorService() {
+        // 获取可用处理器的Java虚拟机的数量（未必能准确获取到CPU核心数量）
+        int core = Runtime.getRuntime().availableProcessors();
+        return new ThreadPoolExecutor(
+                core/2,
+                core,
+                10,
+                TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(50),
+                new CustomizableThreadFactory("main-thread-pool-"),
+                new ThreadPoolExecutor.CallerRunsPolicy());
+    }
+
+    /**
+     * 创建线程池
+     */
+    @Bean("worker-executorService")
+    public ExecutorService workerExecutorService() {
+        // 获取可用处理器的Java虚拟机的数量（未必能准确获取到CPU核心数量）
+        int core = Runtime.getRuntime().availableProcessors();
+        return new ThreadPoolExecutor(
+                core/2,
+                core,
+                10,
+                TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(50),
+                new CustomizableThreadFactory("worker-thread-pool-"),
+                new ThreadPoolExecutor.CallerRunsPolicy());
     }
 
 }
