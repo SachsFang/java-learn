@@ -66,23 +66,6 @@ public class ThreadPoolConfig {
     /**
      * 创建线程池
      */
-    @Bean("main-executorService")
-    public ExecutorService mainExecutorService() {
-        // 获取可用处理器的Java虚拟机的数量（未必能准确获取到CPU核心数量）
-        int core = Runtime.getRuntime().availableProcessors();
-        return new ThreadPoolExecutor(
-                core/2,
-                core,
-                10,
-                TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(50),
-                new CustomizableThreadFactory("main-thread-pool-"),
-                new ThreadPoolExecutor.CallerRunsPolicy());
-    }
-
-    /**
-     * 创建线程池
-     */
     @Bean("worker-executorService")
     public ExecutorService workerExecutorService() {
         // 获取可用处理器的Java虚拟机的数量（未必能准确获取到CPU核心数量）

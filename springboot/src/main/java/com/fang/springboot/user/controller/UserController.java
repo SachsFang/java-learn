@@ -1,7 +1,7 @@
 package com.fang.springboot.user.controller;
 
 import com.fang.springboot.common.pojo.BaseResp;
-import com.fang.springboot.common.service.MultiThreadService;
+import com.fang.springboot.common.util.MultiThreadCalcUtil;
 import com.fang.springboot.common.util.SpringContextManager;
 import com.fang.springboot.user.listener.UserEventListener;
 import com.fang.springboot.user.pojo.User;
@@ -25,6 +25,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Vector;
 
 /**
  * @author shaobin
@@ -43,9 +45,6 @@ public class UserController {
 
     @Autowired
     private UserEventListener userEventListener;
-
-    @Autowired
-    private MultiThreadService multiThreadService;
 
     /**
      * 获取Spring上下文环境也可以使用注入的形式
@@ -198,21 +197,46 @@ public class UserController {
     @ResponseBody
     public String testMultiThreadService() {
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             list.add(i);
         }
-        long startTime = System.currentTimeMillis();
-        List<Integer> resultList = multiThreadService.asyncForEach(list, item -> {
+//        System.out.println("---测试有返回值的异步循环---");
+//        long startTime = System.currentTimeMillis();
+//        List<User> resultList = multiThreadService.asyncForEach(list, item -> {
+//            User user = new User();
+//            try {
+//                Thread.sleep((long) (Math.random() * 100));
+//                user.setName("我是方");
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            return user;
+//        });
+//        System.out.println(resultList.size());
+//        long endTime = System.currentTimeMillis();
+//        System.out.println(endTime - startTime);
+
+        System.out.println("---测试无返回值的异步循环---");
+        // 注意不能使用new ArrayList<>()，会有线程安全问题，导致最终结果不一致
+        List<User> testNullList = new Vector<>();
+        long startTime2 = System.currentTimeMillis();
+        MultiThreadCalcUtil.asyncForEach(list, item -> {
             try {
-                Thread.sleep(2000);
+                User user = new User();
+                double random = Math.random();
+                Thread.sleep((long) (random * 100));
+                user.setName(String.valueOf(random));
+                testNullList.add(user);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            return item;
         });
-        long endTime = System.currentTimeMillis();
-        System.out.println(endTime - startTime);
-        return resultList.toString();
+        System.out.println(testNullList.stream().filter(item -> Objects.isNull(item.getName())).count());
+        long endTime2 = System.currentTimeMillis();
+        System.out.println(endTime2 - startTime2);
+
+
+        return "ok";
     }
 
 }
