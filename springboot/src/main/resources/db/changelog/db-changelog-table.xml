@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="2023-11-18" author="sachs">
+        <sql>
+            /*用户表*/
+            drop table if exists `users`;
+            create table `users`
+            (
+                id   int(11) primary key auto_increment,
+                name varchar(64),
+                age  int(3)
+            );
+            /*订单表*/
+            drop table if exists `order`;
+            create table `order`
+            (
+                id   int(11) primary key auto_increment,
+                code varchar(64),
+                productId varchar(64),
+                amount int(11),
+                remark  varchar(512)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

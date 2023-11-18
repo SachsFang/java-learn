@@ -1,6 +1,12 @@
 spring:
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    # createDatabaseIfNotExist=true 参数配置可在没有改数据库时创建数据库
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:springboot_learn}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+  liquibase:
+    #liquibase开关
+    enabled: ${LIQUIDBASE:true}
+    #指定changelog文件位置
+    change-log: classpath:/db/changelog/db-changelog.xml
