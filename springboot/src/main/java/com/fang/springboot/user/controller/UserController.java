@@ -8,6 +8,7 @@ import com.fang.springboot.user.pojo.User;
 import com.fang.springboot.user.pojo.UserEvent;
 import com.fang.springboot.user.properties.UserConfig;
 import com.fang.springboot.user.service.UserService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author shaobin
@@ -236,6 +240,25 @@ public class UserController {
         System.out.println(endTime2 - startTime2);
 
 
+        return "ok";
+    }
+
+    private static ExecutorService executor = Executors.newSingleThreadExecutor(); // 创建一个单线程的线程池
+
+    @GetMapping("timeout")
+    @SneakyThrows
+    @ResponseBody
+    public String timeout() {
+        Future<String> future = executor.submit(() -> {
+            try {
+                Thread.sleep(71000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("还在计算");
+            return "thread ok";
+        });
+        future.get();
         return "ok";
     }
 

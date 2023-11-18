@@ -3,5 +3,8 @@ server:
   servlet:
     # 设置springboot项目访问路径
     context-path: /learn
+    session:
+      # 配置会话超时
+      timeout: 60s
 rest-template:
   log-request: ${LOG_REQUEST:false}

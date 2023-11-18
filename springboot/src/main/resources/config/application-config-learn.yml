@@ -6,3 +6,6 @@ learn:
 spring:
   application:
     name: springboot-learn
+  mvc:
+    async:
+      request-timeout: 60000
