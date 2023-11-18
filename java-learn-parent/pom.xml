@@ -19,6 +19,7 @@
         <spring.cloud.alibaba.version>2.2.1.RELEASE</spring.cloud.alibaba.version>
         <cglib.version>3.2.12</cglib.version>
         <lombok.version>1.18.10</lombok.version>
+        <openai.version>0.11.0</openai.version>
     </properties>
 
     <dependencyManagement><!--不加这个标签子pom的依赖可能读不到版本号-->
@@ -241,6 +242,28 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-amqp</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+            <!-- chatGpt Java客户端 -->
+            <dependency>
+                <groupId>com.theokanning.openai-gpt3-java</groupId>
+                <artifactId>api</artifactId>
+                <version>${openai.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.theokanning.openai-gpt3-java</groupId>
+                <artifactId>client</artifactId>
+                <version>${openai.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.theokanning.openai-gpt3-java</groupId>
+                <artifactId>service</artifactId>
+                <version>${openai.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.74</version>
             </dependency>
 
         </dependencies>

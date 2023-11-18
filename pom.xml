@@ -23,6 +23,7 @@
         <module>javaSE</module>
         <module>micro-services</module>
         <module>rabbit-mq</module>
+        <module>openai</module>
     </modules>
 
     <properties>
