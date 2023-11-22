@@ -4,6 +4,8 @@ import com.fang.springboot.common.builder.BaseRespBuilder;
 import com.fang.springboot.common.pojo.BaseResp;
 import com.fang.springboot.download_template.constant.TemplateConstant;
 import com.fang.springboot.download_template.service.DownloadService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.codec.CharEncoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
@@ -23,6 +25,7 @@ import java.net.URLEncoder;
  */
 @RestController
 @RequestMapping("/download")
+@Api(tags = "下载控制器")
 public class DownloadFileFunctionController {
 
     @Autowired
@@ -34,6 +37,7 @@ public class DownloadFileFunctionController {
      * @return
      */
     @GetMapping("/compress")
+    @ApiOperation("压缩模板文件夹下载")
     public BaseResp downloadContractExcelFileTemplate(HttpServletResponse response) {
         File templateFile = downloadService.createTemplateCompressFile(TemplateConstant.TEMPLATE_PATH);
         String downloadFileName = "模板.zip";

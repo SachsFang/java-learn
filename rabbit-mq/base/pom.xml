@@ -5,7 +5,7 @@
     <parent>
         <artifactId>rabbit-mq</artifactId>
         <groupId>com.fang</groupId>
-        <version>1.1.0</version>
+        <version>${java-learn.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

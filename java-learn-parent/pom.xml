@@ -20,6 +20,8 @@
         <cglib.version>3.2.12</cglib.version>
         <lombok.version>1.18.10</lombok.version>
         <openai.version>0.11.0</openai.version>
+        <swagger.version>2.9.2</swagger.version>
+        <knife4j.version>2.0.8</knife4j.version>
     </properties>
 
     <dependencyManagement><!--不加这个标签子pom的依赖可能读不到版本号-->
@@ -283,6 +285,32 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.74</version>
+            </dependency>
+
+            <!--swagger-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+                <scope>compile</scope>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>swagger-models</artifactId>
+                        <groupId>io.swagger</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- knife4j -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-ui</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
 
         </dependencies>
