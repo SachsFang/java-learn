@@ -1,6 +1,7 @@
 package com.fang.springboot.common.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
@@ -11,6 +12,7 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
  * @date 2022/8/27 15:11
  */
 @Component
+@DependsOn(value = {"platformTransactionManager"})
 public class TransactionalUtils {
 
     @Autowired
