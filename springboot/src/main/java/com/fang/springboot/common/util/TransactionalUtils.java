@@ -12,7 +12,7 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
  * @date 2022/8/27 15:11
  */
 @Component
-@DependsOn(value = {"platformTransactionManager"})
+@DependsOn(value = {"transactionManager"})
 public class TransactionalUtils {
 
     @Autowired

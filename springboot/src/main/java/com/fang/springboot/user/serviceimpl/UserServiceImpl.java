@@ -1,14 +1,20 @@
 package com.fang.springboot.user.serviceimpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fang.springboot.common.annotation.MyTransactional;
 import com.fang.springboot.common.util.TransactionalUtils;
 import com.fang.springboot.user.dao.UserDAO;
+import com.fang.springboot.user.dao.UserMapper;
+import com.fang.springboot.user.pojo.UserPO;
 import com.fang.springboot.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author shaobin
@@ -20,6 +26,9 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     TransactionalUtils transactionalUtils;
 
     @Override
@@ -29,15 +38,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int insertUser(String name, Integer age) {
+    public int jpaInsertUser(String name, Integer age) {
         return userDAO.insertUser(name, age);
     }
+
+    @Override
+    public List<UserPO> myBatisQueryUserList(String id) {
+        List<UserPO> userPOS = userMapper.selectList(
+                new QueryWrapper<UserPO>().lambda()
+                        .eq(Objects.nonNull(id), UserPO::getId, id)
+        );
+        return userPOS;
+    }
+
+
 
     @Override
     @Transactional
     public String testSpringAnnotationTransactional() {
         try {
-            insertUser("transactional", 22);
+            jpaInsertUser("transactional", 22);
             int i = 1 / 0;
             return "ok";
         } catch (Exception e) {// 这里被捕获了，事务失效
@@ -55,7 +75,7 @@ public class UserServiceImpl implements UserService {
         TransactionStatus begin = null;
         try {
             begin = transactionalUtils.begin();
-            insertUser("transactional", 24);
+            jpaInsertUser("transactional", 24);
             int i = 1 / 0;
             transactionalUtils.commit(begin);
             return "ok";
@@ -69,7 +89,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @MyTransactional
     public String testMyTransactional() {
-        insertUser("My annotaton transactional", 22);
+        jpaInsertUser("My annotaton transactional", 22);
         int error = 1 / 0;
         return "finish";
     }

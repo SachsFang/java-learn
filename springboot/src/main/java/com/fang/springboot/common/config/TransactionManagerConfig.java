@@ -19,7 +19,7 @@ public class TransactionManagerConfig {
      * @return
      */
     @Bean
-    public PlatformTransactionManager platformTransactionManager(DataSource dataSource) {
+    public PlatformTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }

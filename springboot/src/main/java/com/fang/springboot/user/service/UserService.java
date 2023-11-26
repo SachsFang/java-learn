@@ -1,7 +1,8 @@
 package com.fang.springboot.user.service;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
+import com.fang.springboot.user.pojo.UserPO;
+
+import java.util.List;
 
 /**
  * @author shaobin
@@ -11,7 +12,9 @@ public interface UserService {
 
     String printInfo();
 
-    int insertUser(String name, Integer age);
+    int jpaInsertUser(String name, Integer age);
+
+    List<UserPO> myBatisQueryUserList(String id);
 
     String testSpringAnnotationTransactional();
 

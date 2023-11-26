@@ -95,7 +95,7 @@ public class UserController {
     @RequestMapping("/insert")
     @ResponseBody
     public String insert(@Param("name") String name, @Param("age") Integer age) {
-        if (userService.insertUser(name, age) == 1) {
+        if (userService.jpaInsertUser(name, age) == 1) {
             return "success";
         }
         return "fail";
@@ -134,7 +134,7 @@ public class UserController {
      */
     @GetMapping("/test/thymeleaf1")
     public String testThymeleaf1(ModelMap modelMap) {
-        User user = new User("fang", 0, 22);
+        User user = new User("a", "fang", 0, 22);
         modelMap.put("user", user);
         return "/user/index";
     }
@@ -146,7 +146,7 @@ public class UserController {
      */
     @GetMapping("/test/thymeleaf2")
     public String testThymeleaf2(HttpServletRequest httpServletRequest) {
-        User user = new User("fang", 0, 22);
+        User user = new User("b", "fang", 0, 22);
         httpServletRequest.setAttribute("user", user);
         return "/user/index";
     }

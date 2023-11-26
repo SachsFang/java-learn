@@ -1,7 +1,10 @@
 package com.fang.springboot.user.serviceimpl;
 
+import com.fang.springboot.user.pojo.UserPO;
 import com.fang.springboot.user.service.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author shaobin
@@ -15,8 +18,13 @@ public class UserServiceImplTwo implements UserService {
     }
 
     @Override
-    public int insertUser(String name, Integer age) {
+    public int jpaInsertUser(String name, Integer age) {
         return 0;
+    }
+
+    @Override
+    public List<UserPO> myBatisQueryUserList(String id) {
+        return null;
     }
 
     @Override
