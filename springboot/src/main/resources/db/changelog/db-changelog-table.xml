@@ -11,7 +11,8 @@
             (
                 id   int(11) primary key auto_increment,
                 name varchar(64),
-                age  int(3)
+                age  int(3),
+                sex int(1)
             );
             /*订单表*/
             drop table if exists `order`;
@@ -25,4 +26,69 @@
             );
         </sql>
     </changeSet>
+
+    <changeSet id="2023-11-19-01" author="sachs">
+        <sql>
+            DROP TABLE IF EXISTS `basic_province`;
+            CREATE TABLE `basic_province`
+            (
+                `id`                 varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                `name`               varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+                `type`               varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型: 0省市 ; 1省区',
+                `parent_id`          varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父级id',
+                `adcode`             varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '行政编码',
+                `center_longitude`   varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中心经度',
+                `center_latitude`    varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中心纬度',
+                `centroid_longitude` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '矩心经度',
+                `centroid_latitude`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '矩心纬度',
+                PRIMARY KEY (`id`) USING BTREE,
+                UNIQUE INDEX `udx_adcode`(`adcode`) USING BTREE,
+                INDEX                `idx_type`(`type`) USING BTREE
+            ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '行政区域表' ROW_FORMAT = Dynamic;
+
+            DROP TABLE IF EXISTS `model_node`;
+            CREATE TABLE `model_node`
+            (
+                `id`               varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                `create_time`      datetime(6) NULL DEFAULT NULL,
+                `creator_id`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                `update_time`      datetime(6) NULL DEFAULT NULL,
+                `updater_id`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                `model_id`         varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                `city_id`          varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                `node_id`          varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                `node_name`        varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                `province_area_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                `power_grid_area`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电网片区',
+                `province_id`      varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                `remark`           varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                `voltage`          varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                PRIMARY KEY (`id`) USING BTREE,
+                UNIQUE INDEX `udx_node`(`node_name`, `province_area_id`) USING BTREE,
+                INDEX              `udx_shaobin_name_node`(`city_id`, `node_id`, `node_name`) USING BTREE
+            ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+            DROP TABLE IF EXISTS `data_price_macro_node`;
+            CREATE TABLE `data_price_macro_node`
+            (
+                `id`           varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '主键',
+                `ac_node_id`   varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '节点ID',
+                `date`         date NULL DEFAULT NULL COMMENT '日期',
+                `node_price`   varchar(2000) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '节点电价',
+                `data_type`    varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '结果类型',
+                `t_start_time` datetime(0) NULL DEFAULT NULL COMMENT '第一个数据点的时间',
+                `t_size`       int(11) NULL DEFAULT NULL COMMENT '数据点个数',
+                `t_delta`      int(11) NULL DEFAULT NULL COMMENT '时间间隔',
+                `t_delta_unit` int(11) NULL DEFAULT NULL COMMENT '时间间隔单位 0：秒，1：分钟，2：小时，3：天，4：月，5：年',
+                `creator_id`   varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '创建人',
+                `create_time`  datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                `updater_id`   varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '更新人',
+                `update_time`  datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                PRIMARY KEY (`id`) USING BTREE,
+                UNIQUE INDEX `udx_data_trade_macro_node_price`(`date`, `ac_node_id`, `data_type`) USING BTREE
+            ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '交易结果-市场节点电价 ' ROW_FORMAT = Dynamic;
+        </sql>
+    </changeSet>
+
+
 </databaseChangeLog>
