@@ -1,5 +1,6 @@
 package com.fang.springboot.user.service;
 
+import com.fang.springboot.user.enums.SexEnum;
 import com.fang.springboot.user.pojo.UserPO;
 
 import java.util.List;
@@ -14,7 +15,11 @@ public interface UserService {
 
     int jpaInsertUser(String name, Integer age);
 
-    List<UserPO> myBatisQueryUserList(String id);
+    int jpaInsertUser(String name, Integer age, Integer sex);
+
+    int myBatisInsertUser(String name, Integer age, SexEnum sex);
+
+    List<UserPO> myBatisQueryUserList(SexEnum sex);
 
     String testSpringAnnotationTransactional();
 

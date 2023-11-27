@@ -14,3 +14,9 @@ spring:
     enabled: ${LIQUIDBASE:true}
     #指定changelog文件位置
     change-log: classpath:/db/changelog/db-changelog.xml
+
+
+mybatis-plus:
+  configuration:
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+

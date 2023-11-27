@@ -5,6 +5,7 @@ import com.fang.springboot.common.annotation.MyTransactional;
 import com.fang.springboot.common.util.TransactionalUtils;
 import com.fang.springboot.user.dao.UserDAO;
 import com.fang.springboot.user.dao.UserMapper;
+import com.fang.springboot.user.enums.SexEnum;
 import com.fang.springboot.user.pojo.UserPO;
 import com.fang.springboot.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int jpaInsertUser(String name, Integer age) {
-        return userDAO.insertUser(name, age);
+        return userDAO.insertUser(name, age, 0);
     }
 
     @Override
-    public List<UserPO> myBatisQueryUserList(String id) {
+    public int jpaInsertUser(String name, Integer age, Integer sex) {
+        return userDAO.insertUser(name, age, sex);
+    }
+
+    @Override
+    public int myBatisInsertUser(String name, Integer age, SexEnum sex) {
+//        UserPO userPO = new UserPO(null, name, age, sex);
+        int result = 0;
+//        result = userMapper.insert(userPO);
+        result = userMapper.insertUser(name, age, sex);
+        return result;
+    }
+
+    @Override
+    public List<UserPO> myBatisQueryUserList(SexEnum sex) {
         List<UserPO> userPOS = userMapper.selectList(
                 new QueryWrapper<UserPO>().lambda()
-                        .eq(Objects.nonNull(id), UserPO::getId, id)
+                        .eq(Objects.nonNull(sex), UserPO::getSex, sex)
         );
         return userPOS;
     }

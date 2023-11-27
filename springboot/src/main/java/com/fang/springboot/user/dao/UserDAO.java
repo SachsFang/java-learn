@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserDAO extends JpaRepository<User, String> {
 
     @Modifying
-    @Query(value = "INSERT INTO users (name,age) VALUES (:name,:age)",
+    @Query(value = "INSERT INTO users (name,age, sex) VALUES (:name,:age,:sex)",
             nativeQuery = true)
-    int insertUser(@Param("name") String name, @Param("age") Integer age);
+    int insertUser(@Param("name") String name, @Param("age") Integer age, @Param("sex") Integer sex);
 
 }

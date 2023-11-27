@@ -1,5 +1,6 @@
 package com.fang.springboot.user.serviceimpl;
 
+import com.fang.springboot.user.enums.SexEnum;
 import com.fang.springboot.user.pojo.UserPO;
 import com.fang.springboot.user.service.UserService;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,17 @@ public class UserServiceImplTwo implements UserService {
     }
 
     @Override
-    public List<UserPO> myBatisQueryUserList(String id) {
+    public int jpaInsertUser(String name, Integer age, Integer sex) {
+        return 0;
+    }
+
+    @Override
+    public int myBatisInsertUser(String name, Integer age, SexEnum sex) {
+        return 0;
+    }
+
+    @Override
+    public List<UserPO> myBatisQueryUserList(SexEnum sex) {
         return null;
     }
 

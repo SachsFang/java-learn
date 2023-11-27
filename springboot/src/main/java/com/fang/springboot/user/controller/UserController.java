@@ -10,7 +10,6 @@ import com.fang.springboot.user.properties.UserConfig;
 import com.fang.springboot.user.service.UserService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -94,8 +93,8 @@ public class UserController {
 
     @RequestMapping("/insert")
     @ResponseBody
-    public String insert(@Param("name") String name, @Param("age") Integer age) {
-        if (userService.jpaInsertUser(name, age) == 1) {
+    public String jpaInsert(String name, Integer age, Integer sex) {
+        if (userService.jpaInsertUser(name, age, sex) == 1) {
             return "success";
         }
         return "fail";

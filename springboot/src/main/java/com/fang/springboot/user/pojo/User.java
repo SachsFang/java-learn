@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "data_price_macro_node")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -22,6 +22,9 @@ public class User {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "sex")
+    private int sex;
 
     @Column(name = "age")
     private int age;
