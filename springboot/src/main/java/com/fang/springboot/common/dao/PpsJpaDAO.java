@@ -1,6 +1,6 @@
 package com.fang.springboot.common.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
@@ -8,5 +8,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @date 2023/11/24 11:04
  */
 @NoRepositoryBean
-public interface PpsJpaDAO<T, ID> extends JpaRepository<T, ID> {
+public interface PpsJpaDAO<T> extends BaseMapper<T> {
 }

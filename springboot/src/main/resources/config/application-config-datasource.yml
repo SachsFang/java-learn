@@ -19,4 +19,7 @@ spring:
 mybatis-plus:
   configuration:
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    global-config:
+      db-config:
+        meta-object-handler: com.baomidou.mybatisplus.extension.handlers.MybatisPlusDefaultMetaObjectHandler
 
