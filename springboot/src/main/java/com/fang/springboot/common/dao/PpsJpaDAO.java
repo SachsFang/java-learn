@@ -8,5 +8,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @date 2023/11/24 11:04
  */
 @NoRepositoryBean
-public interface PpsJpaDAO<T> extends BaseMapper<T> {
+public interface PpsJpaDAO<T> extends BaseMapper<T>, MyDAO<T> {
 }
