@@ -13,10 +13,6 @@ import java.util.Date;
 @Component
 public class CommonFieldMetaObjectHandler implements MetaObjectHandler {
 
-    public CommonFieldMetaObjectHandler() {
-        System.out.println();
-    }
-
     @Override
     public void insertFill(MetaObject metaObject) {
 //        metaObject.setValue("createTime", new Date());
