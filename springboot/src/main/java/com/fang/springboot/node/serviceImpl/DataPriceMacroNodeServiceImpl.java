@@ -1,6 +1,6 @@
 package com.fang.springboot.node.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.fang.springboot.node.dao.DataPriceMacroNodeDAO;
 import com.fang.springboot.node.pojo.DataPriceMacroNodeDO;
 import com.fang.springboot.node.service.DataPriceMacroNodeService;
@@ -37,7 +37,8 @@ public class DataPriceMacroNodeServiceImpl implements DataPriceMacroNodeService 
 
     @Override
     public List<DataPriceMacroNodeDO> query(Date startDate, Date endDate, List<String> orgIds){
-        return dataPriceMacroNodeDAO.selectList(new QueryWrapper<DataPriceMacroNodeDO>().lambda()
+
+        return dataPriceMacroNodeDAO.selectList(Wrappers.<DataPriceMacroNodeDO>lambdaQuery()
                 .ge(Objects.nonNull(startDate), DataPriceMacroNodeDO::getDate, startDate)
                 .le(Objects.nonNull(endDate), DataPriceMacroNodeDO::getDate, endDate)
             );
