@@ -14,7 +14,55 @@ spring:
     enabled: ${LIQUIDBASE:true}
     #指定changelog文件位置
     change-log: classpath:/db/changelog/db-changelog.xml
-
+  shardingsphere:
+    props:
+      sql-show: true
+    datasource:
+      names: ds0,ds1
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:learn_master}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai/ds0
+        username: root
+        password: 123456
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:learn_slave}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai/ds1
+        username: root
+        password: 12345
+    rules:
+      sharding:
+        default-data-source-name: ds0
+        tables:
+          # 配置 data_price_macro_node 表规则
+          data_price_macro_node:
+            actual-data-nodes: ds$->{0..1}.data_price_macro_node_$->{0..1}
+            # 配置分库策略
+            database-strategy:
+              standard:
+                sharding-column: id
+                sharding-algorithm-name: database-inline
+            # 配置分表策略
+            table-strategy:
+              standard:
+                sharding-column: ac_node_id
+                sharding-algorithm-name: table-inline
+            keyGenerateStrategy:
+              column: id
+              keyGeneratorName: snowflake
+        sharding-algorithms:
+          database-inline:
+            type: INLINE
+            props:
+              algorithm-expression: ds$->{id % 2}
+          table-inline:
+            type: INLINE
+            props:
+              algorithm-expression: data_price_macro_node_$->{ac_node_id % 2}
+        keyGenerators:
+          snowflake:
+            type: SNOWFLAKE
 
 mybatis-plus:
   configuration:

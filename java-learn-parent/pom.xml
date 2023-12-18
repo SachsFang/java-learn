@@ -23,6 +23,7 @@
         <swagger.version>2.9.2</swagger.version>
         <knife4j.version>2.0.8</knife4j.version>
         <mybatis-plus.version>3.3.1</mybatis-plus.version>
+        <sharding-sphere.version>3.1.0</sharding-sphere.version>
     </properties>
 
     <dependencyManagement><!--不加这个标签子pom的依赖可能读不到版本号-->
@@ -318,6 +319,16 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-ui</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding-sphere.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.arthas</groupId>
+                <artifactId>arthas-spring-boot-starter</artifactId>
+                <version>3.6.3</version>
             </dependency>
 
         </dependencies>

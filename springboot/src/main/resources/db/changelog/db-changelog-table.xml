@@ -68,8 +68,8 @@
                 INDEX              `udx_shaobin_name_node`(`city_id`, `node_id`, `node_name`) USING BTREE
             ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
-            DROP TABLE IF EXISTS `data_price_macro_node`;
-            CREATE TABLE `data_price_macro_node`
+            DROP TABLE IF EXISTS `data_price_macro_node_0`;
+            CREATE TABLE `data_price_macro_node_0`
             (
                 `id`           varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '主键',
                 `ac_node_id`   varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '节点ID',
@@ -87,6 +87,7 @@
                 PRIMARY KEY (`id`) USING BTREE,
                 UNIQUE INDEX `udx_data_trade_macro_node_price`(`date`, `ac_node_id`, `data_type`) USING BTREE
             ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '交易结果-市场节点电价 ' ROW_FORMAT = Dynamic;
+            CREATE TABLE `data_price_macro_node_1` LIKE `data_price_macro_node_0`
         </sql>
     </changeSet>
 
