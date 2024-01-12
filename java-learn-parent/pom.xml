@@ -320,6 +320,12 @@
                 <version>${knife4j.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.taobao.arthas</groupId>
+                <artifactId>arthas-spring-boot-starter</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
