@@ -1,2 +1,6 @@
 WEB_PORT: 8092
 LOG_REQUEST: true
+
+MYSQL_SCHEMA: learn_master
+
+ARTHAS_ENABLE: true
