@@ -26,7 +26,8 @@ public class MultiThreadCalcUtil {
     private static final ForkJoinPool calcWorkerExecutorPool = getDefaultCalcThreadPoolExecutor();
 
     private static ForkJoinPool getDefaultCalcThreadPoolExecutor() {
-        return new ForkJoinPool(Runtime.getRuntime().availableProcessors() - 1);
+        return new ForkJoinPool(7);
+//        return new ForkJoinPool(Runtime.getRuntime().availableProcessors() - 1);
     }
 
     public static <T> void asyncForEach(Collection<T> taskList, Consumer<T> consumer) {
@@ -64,7 +65,8 @@ public class MultiThreadCalcUtil {
 //        }
         Map<K, R> rMap = new ConcurrentHashMap<>();
         Future<List<R>> future = calcExecutorPool.submit(() ->
-                taskMap.entrySet().parallelStream().map(kvEntry -> {
+                // ps:Set/Map.entrySet不支持并行流，先把Map中的key转成list，再用并行流能生效了
+                new ArrayList<>(taskMap.entrySet()).parallelStream().map(kvEntry -> {
                     R result = function.apply(kvEntry.getKey(), kvEntry.getValue());
                     if (Objects.nonNull(kvEntry.getKey()) && Objects.nonNull(result)) {
                         rMap.put(kvEntry.getKey(), result);
@@ -82,8 +84,8 @@ public class MultiThreadCalcUtil {
     }
 
     /**
-     * 多线程拆分日期查询服务
-     * ps: 解决dubbo服务数据量过大超时问题
+     * 异步日期分片功能
+     * ps: 1.异步分片查询加快整体查询速度 2.解决dubbo服务单次调用数据量过大、超时问题
      *
      * @param startDate
      * @param endDate
@@ -91,14 +93,15 @@ public class MultiThreadCalcUtil {
      * @param <R>
      * @return
      */
-    public static <R> List<R> queryServiceSplitDate(Date startDate, Date endDate, DateBiFuntion<R> biFunction) {
+    public static <R> List<R> asyncShardingByDate(Date startDate, Date endDate, DateBiFuntion<R> biFunction) {
         List<Date> scopeDate = DateUtil.rangeToList(startDate, endDate, DateField.DAY_OF_MONTH).stream().map(DateTime::toJdkDate).collect(Collectors.toList());
         if (scopeDate.size() <= 1) {
             return biFunction.apply(startDate, endDate);
         }
-        int availableProcessors = Runtime.getRuntime().availableProcessors() / 2;
+//        int availableProcessors = Runtime.getRuntime().availableProcessors() - 1;
+        int availableProcessors = 8 - 1;
         int cycles = Math.min(scopeDate.size(), availableProcessors);
-        int incr = scopeDate.size() > availableProcessors ? Math.round(scopeDate.size() / (float) availableProcessors) : 1;
+        int incr = scopeDate.size() > availableProcessors ? (int) Math.ceil(scopeDate.size() / (double) availableProcessors) : 1;
         Map<Date, Date> cyclesMap = new HashMap<>();
         if (incr > 1) {
             int startIndex = 0;
@@ -145,7 +148,7 @@ public class MultiThreadCalcUtil {
      * @return
      */
     /*public static <T, R> List<R> queryDBSplitPage(AbstractJpaWrapper queryWrapper, Function<T, R> function, int count) {
-        int availableProcessors = Runtime.getRuntime().availableProcessors() / 2;
+        int availableProcessors = AVAILABLE_PROCESSORS / 2;
         if (count > availableProcessors * 1000) {
             function.apply(queryWrapper);
         }
