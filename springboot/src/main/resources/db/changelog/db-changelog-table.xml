@@ -64,8 +64,7 @@
                 `remark`           varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
                 `voltage`          varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
                 PRIMARY KEY (`id`) USING BTREE,
-                UNIQUE INDEX `udx_node`(`node_name`, `province_area_id`) USING BTREE,
-                INDEX              `udx_shaobin_name_node`(`city_id`, `node_id`, `node_name`) USING BTREE
+                UNIQUE INDEX `udx_node_unite`(`province_id`, `city_id`, `node_id`) USING BTREE
             ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
             DROP TABLE IF EXISTS `data_price_macro_node`;
@@ -85,10 +84,104 @@
                 `updater_id`   varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '更新人',
                 `update_time`  datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
                 PRIMARY KEY (`id`) USING BTREE,
-                UNIQUE INDEX `udx_data_trade_macro_node_price`(`date`, `ac_node_id`, `data_type`) USING BTREE
+                UNIQUE INDEX `udx_dpmnp_unite_opt`(`ac_node_id`, `date`, `data_type`) USING BTREE
             ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '交易结果-市场节点电价 ' ROW_FORMAT = Dynamic;
+
+            DROP TABLE IF EXISTS `data_price_macro_node_partition`;
+            CREATE TABLE `data_price_macro_node_partition`
+            (
+                `id`           varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '主键',
+                `ac_node_id`   varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '节点ID',
+                `date`         date NOT NULL COMMENT '日期',
+                `node_price`   varchar(2000) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '节点电价',
+                `data_type`    varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '结果类型',
+                `t_start_time` datetime(0) NULL DEFAULT NULL COMMENT '第一个数据点的时间',
+                `t_size`       int(11) NULL DEFAULT NULL COMMENT '数据点个数',
+                `t_delta`      int(11) NULL DEFAULT NULL COMMENT '时间间隔',
+                `t_delta_unit` int(11) NULL DEFAULT NULL COMMENT '时间间隔单位 0：秒，1：分钟，2：小时，3：天，4：月，5：年',
+                `creator_id`   varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '创建人',
+                `create_time`  datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                `updater_id`   varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '更新人',
+                `update_time`  datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                PRIMARY KEY (`id`,`date`) USING BTREE,
+                UNIQUE INDEX `udx_dpmnp_unite_opt`(`ac_node_id`, `date`, `data_type`) USING BTREE
+            ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '交易结果-市场节点电价 ' ROW_FORMAT = Dynamic;
+            /*表分区*/
+            ALTER TABLE data_price_macro_node_partition PARTITION BY RANGE COLUMNS (date) (
+                PARTITION p_history VALUES LESS THAN ('2020-01-01'),
+                PARTITION p_2020_01 VALUES LESS THAN ('2020-02-01'),
+                PARTITION p_2020_02 VALUES LESS THAN ('2020-03-01'),
+                PARTITION p_2020_03 VALUES LESS THAN ('2020-04-01'),
+                PARTITION p_2020_04 VALUES LESS THAN ('2020-05-01'),
+                PARTITION p_2020_05 VALUES LESS THAN ('2020-06-01'),
+                PARTITION p_2020_06 VALUES LESS THAN ('2020-07-01'),
+                PARTITION p_2020_07 VALUES LESS THAN ('2020-08-01'),
+                PARTITION p_2020_08 VALUES LESS THAN ('2020-09-01'),
+                PARTITION p_2020_09 VALUES LESS THAN ('2020-10-01'),
+                PARTITION p_2020_10 VALUES LESS THAN ('2020-11-01'),
+                PARTITION p_2020_11 VALUES LESS THAN ('2020-12-01'),
+                PARTITION p_2020_12 VALUES LESS THAN ('2021-01-01'),
+
+                PARTITION p_2021_01 VALUES LESS THAN ('2021-02-01'),
+                PARTITION p_2021_02 VALUES LESS THAN ('2021-03-01'),
+                PARTITION p_2021_03 VALUES LESS THAN ('2021-04-01'),
+                PARTITION p_2021_04 VALUES LESS THAN ('2021-05-01'),
+                PARTITION p_2021_05 VALUES LESS THAN ('2021-06-01'),
+                PARTITION p_2021_06 VALUES LESS THAN ('2021-07-01'),
+                PARTITION p_2021_07 VALUES LESS THAN ('2021-08-01'),
+                PARTITION p_2021_08 VALUES LESS THAN ('2021-09-01'),
+                PARTITION p_2021_09 VALUES LESS THAN ('2021-10-01'),
+                PARTITION p_2021_10 VALUES LESS THAN ('2021-11-01'),
+                PARTITION p_2021_11 VALUES LESS THAN ('2021-12-01'),
+                PARTITION p_2021_12 VALUES LESS THAN ('2022-01-01'),
+
+                PARTITION p_2022_01 VALUES LESS THAN ('2022-02-01'),
+                PARTITION p_2022_02 VALUES LESS THAN ('2022-03-01'),
+                PARTITION p_2022_03 VALUES LESS THAN ('2022-04-01'),
+                PARTITION p_2022_04 VALUES LESS THAN ('2022-05-01'),
+                PARTITION p_2022_05 VALUES LESS THAN ('2022-06-01'),
+                PARTITION p_2022_06 VALUES LESS THAN ('2022-07-01'),
+                PARTITION p_2022_07 VALUES LESS THAN ('2022-08-01'),
+                PARTITION p_2022_08 VALUES LESS THAN ('2022-09-01'),
+                PARTITION p_2022_09 VALUES LESS THAN ('2022-10-01'),
+                PARTITION p_2022_10 VALUES LESS THAN ('2022-11-01'),
+                PARTITION p_2022_11 VALUES LESS THAN ('2022-12-01'),
+                PARTITION p_2022_12 VALUES LESS THAN ('2023-01-01'),
+
+                PARTITION p_2023_01 VALUES LESS THAN ('2023-02-01'),
+                PARTITION p_2023_02 VALUES LESS THAN ('2023-03-01'),
+                PARTITION p_2023_03 VALUES LESS THAN ('2023-04-01'),
+                PARTITION p_2023_04 VALUES LESS THAN ('2023-05-01'),
+                PARTITION p_2023_05 VALUES LESS THAN ('2023-06-01'),
+                PARTITION p_2023_06 VALUES LESS THAN ('2023-07-01'),
+                PARTITION p_2023_07 VALUES LESS THAN ('2023-08-01'),
+                PARTITION p_2023_08 VALUES LESS THAN ('2023-09-01'),
+                PARTITION p_2023_09 VALUES LESS THAN ('2023-10-01'),
+                PARTITION p_2023_10 VALUES LESS THAN ('2023-11-01'),
+                PARTITION p_2023_11 VALUES LESS THAN ('2023-12-01'),
+                PARTITION p_2023_12 VALUES LESS THAN ('2024-01-01'),
+
+                PARTITION p_2024_01 VALUES LESS THAN ('2024-02-01'),
+                PARTITION p_2024_02 VALUES LESS THAN ('2024-03-01'),
+                PARTITION p_2024_03 VALUES LESS THAN ('2024-04-01'),
+                PARTITION p_2024_04 VALUES LESS THAN ('2024-05-01'),
+                PARTITION p_2024_05 VALUES LESS THAN ('2024-06-01'),
+                PARTITION p_2024_06 VALUES LESS THAN ('2024-07-01'),
+                PARTITION p_2024_07 VALUES LESS THAN ('2024-08-01'),
+                PARTITION p_2024_08 VALUES LESS THAN ('2024-09-01'),
+                PARTITION p_2024_09 VALUES LESS THAN ('2024-10-01'),
+                PARTITION p_2024_10 VALUES LESS THAN ('2024-11-01'),
+                PARTITION p_2024_11 VALUES LESS THAN ('2024-12-01'),
+                PARTITION p_2024_12 VALUES LESS THAN ('2025-01-01'),
+
+                PARTITION p_future VALUES LESS THAN (MAXVALUE)
+            );
         </sql>
     </changeSet>
+
+<!--    <changeSet id="" author="s">-->
+<!--        <sql></sql>-->
+<!--    </changeSet>-->
 
 
 </databaseChangeLog>

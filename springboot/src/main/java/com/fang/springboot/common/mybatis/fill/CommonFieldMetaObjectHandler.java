@@ -1,4 +1,4 @@
-package com.fang.springboot.common.mybatis;
+package com.fang.springboot.common.mybatis.fill;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;

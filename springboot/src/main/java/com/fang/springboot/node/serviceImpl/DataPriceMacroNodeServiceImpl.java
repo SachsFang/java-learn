@@ -8,7 +8,6 @@ import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * 交易结果-市场节点电价服务实现
+ *
  * @author shaobin
  * @date 2023/11/24
  */
@@ -24,28 +24,19 @@ public class DataPriceMacroNodeServiceImpl implements DataPriceMacroNodeService 
 
     @Autowired
     private DataPriceMacroNodeDAO dataPriceMacroNodeDAO;
-    
-    @Override
-    public List<DataPriceMacroNodeDO> query(Date startDate, Date endDate){
-        return query(startDate, endDate, (String) null);
-    }
 
     @Override
-    public List<DataPriceMacroNodeDO> query(Date startDate, Date endDate, String orgId) {
-        return query(startDate, endDate, Collections.singletonList(orgId));
-    }
-
-    @Override
-    public List<DataPriceMacroNodeDO> query(Date startDate, Date endDate, List<String> orgIds){
-
+    public List<DataPriceMacroNodeDO> query(Date startDate, Date endDate, List<String> nodeIds, List<String> dataTypes) {
         return dataPriceMacroNodeDAO.selectList(Wrappers.<DataPriceMacroNodeDO>lambdaQuery()
+                .in(DataPriceMacroNodeDO::getAcNodeId, nodeIds)
                 .ge(Objects.nonNull(startDate), DataPriceMacroNodeDO::getDate, startDate)
                 .le(Objects.nonNull(endDate), DataPriceMacroNodeDO::getDate, endDate)
-            );
+                .in(CollectionUtils.isNotEmpty(dataTypes), DataPriceMacroNodeDO::getDataType, dataTypes)
+        );
     }
-    
+
     @Override
-    public List<DataPriceMacroNodeDO> saveOrUpdateBatch(List<DataPriceMacroNodeDO> dataPriceMacroNodeDOList){
+    public List<DataPriceMacroNodeDO> saveOrUpdateBatch(List<DataPriceMacroNodeDO> dataPriceMacroNodeDOList) {
         dataPriceMacroNodeDOList.forEach(item -> {
             if (Objects.nonNull(item.getId())) {
                 dataPriceMacroNodeDAO.updateById(item);
@@ -55,9 +46,9 @@ public class DataPriceMacroNodeServiceImpl implements DataPriceMacroNodeService 
         });
         return dataPriceMacroNodeDOList;
     }
-    
+
     @Override
-    public boolean deleteByIds(List<String> ids){
+    public boolean deleteByIds(List<String> ids) {
         if (CollectionUtils.isEmpty(ids)) {
             return true;
         }

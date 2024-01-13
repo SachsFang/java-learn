@@ -28,4 +28,37 @@
 
         </sql>
     </changeSet>
+
+    <changeSet id="2023-12-10-01" author="shaobin">
+        <sql>
+            /*生成10亿节点数据，前提：三年、20种数据类型，节点表5000个节点*/
+            INSERT INTO `data_price_macro_node_partition`
+            SELECT MD5(UUID()) AS id,
+                   ac_node_id,
+                   DATE_ADD('2024-01-01', INTERVAL n DAY) AS date,
+		           CONCAT('[',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),',',ROUND(RAND()*1000, 2),']') AS node_price,
+		           type AS data_type,
+		           DATE_ADD('2024-01-01', INTERVAL n DAY) AS t_start_time,
+		           '24' AS t_size,
+		           '1' AS t_delta,
+		           '2' AS t_delta_unit,
+		           'root' AS creator_id,
+		           NOW() AS create_time,
+		           'root' AS updater_id,
+		           NOW() AS update_time
+            FROM (
+                SELECT n FROM (
+                    SELECT @n := @n + 1 AS n
+                    FROM information_schema.columns
+                    CROSS JOIN (SELECT @n := -1) AS init_n
+                ) AS create_index_rows
+                WHERE n &lt; (SELECT DATEDIFF('2024-01-02', '2023-01-01'))
+            ) AS dates
+            CROSS JOIN (
+                SELECT @type := @type + 1 AS type
+	            FROM information_schema.columns CROSS JOIN (SELECT @type := 0) AS init_type
+                LIMIT 20) AS types
+            CROSS JOIN (SELECT node_id AS ac_node_id FROM model_node) AS nodes
+        </sql>
+    </changeSet>
 </databaseChangeLog>

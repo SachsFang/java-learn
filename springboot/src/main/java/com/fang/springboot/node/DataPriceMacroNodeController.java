@@ -3,6 +3,7 @@ package com.fang.springboot.node;
 import com.fang.springboot.common.BaseController;
 import com.fang.springboot.common.builder.BaseRespBuilder;
 import com.fang.springboot.common.pojo.BaseResp;
+import com.fang.springboot.common.util.MultiThreadCalcUtil;
 import com.fang.springboot.node.pojo.DataPriceMacroNodeDO;
 import com.fang.springboot.node.service.DataPriceMacroNodeService;
 import io.swagger.annotations.Api;
@@ -29,12 +30,25 @@ public class DataPriceMacroNodeController extends BaseController {
     @GetMapping("/query")
     public BaseResp<List<DataPriceMacroNodeDO>> queryDataPriceMacroNodeList(@RequestParam Date startDate,
                                                                             @RequestParam Date endDate,
-                                                                            @RequestParam(required = false) String orgId){
+                                                                            @RequestParam List<String> nodeIds,
+                                                                            @RequestParam List<String> dataTypes){
         return BaseRespBuilder.success().setData(
-            dataPriceMacroNodeService.query(startDate, endDate, orgId)
+            dataPriceMacroNodeService.query(startDate, endDate, nodeIds, dataTypes)
         ).build();
     }
-    
+
+     @ApiOperation("查询交易结果-市场节点电价数据")
+     @GetMapping("/queryMulti")
+     public BaseResp<List<DataPriceMacroNodeDO>> queryDataPriceMacroNodeListByMulti(@RequestParam Date startDate,
+                                                                             @RequestParam Date endDate,
+                                                                             @RequestParam List<String> nodeIds,
+                                                                             @RequestParam List<String> dataTypes){
+         return BaseRespBuilder.success().setData(
+                 MultiThreadCalcUtil.asyncShardingByDate(startDate, endDate, (itemStartDate, itemEndDate) ->
+                         dataPriceMacroNodeService.query(itemStartDate, itemEndDate, nodeIds, dataTypes))
+         ).build();
+     }
+
     @ApiOperation("批量新增保存交易结果-市场节点电价数据")
     @PostMapping("/saveOrUpdateBatch")
     public BaseResp<List<DataPriceMacroNodeDO>> saveOrUpdateBatchDataPriceMacroNodeList(@RequestBody List<DataPriceMacroNodeDO> dataPriceMacroNodeDOList){
