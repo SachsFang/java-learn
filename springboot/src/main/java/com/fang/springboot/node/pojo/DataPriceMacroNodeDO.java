@@ -1,11 +1,15 @@
 package com.fang.springboot.node.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fang.springboot.common.mybatis.type.reference.BigDecimalJsonTypeHandler;
 import com.fang.springboot.common.pojo.PpsBasicDO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 交易结果-市场节点电价实体
@@ -14,7 +18,7 @@ import java.util.Date;
  * @date 2023/11/24
  */
 @Data
-@TableName(value = "data_price_macro_node")
+@TableName(value = "data_price_macro_node_partition_100000w", autoResultMap = true)
 @ApiModel(value = "交易结果-市场节点电价")
 public class DataPriceMacroNodeDO extends PpsBasicDO {
 
@@ -31,7 +35,8 @@ public class DataPriceMacroNodeDO extends PpsBasicDO {
     /**
      * 节点电价
      */
-    private String nodePrice;
+    @TableField(typeHandler = BigDecimalJsonTypeHandler.class)
+    private List<BigDecimal> nodePrice;
 
     /**
      * 结果类型

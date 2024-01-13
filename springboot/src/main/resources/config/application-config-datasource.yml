@@ -18,6 +18,8 @@ spring:
 
 mybatis-plus:
   configuration:
+    # typeHandler扫描路径
+    type-handlers-package: com.fang.springboot.common.mybatis.type
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
     global-config:
       db-config:
