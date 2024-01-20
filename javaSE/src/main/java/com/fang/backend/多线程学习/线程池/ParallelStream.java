@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ParallelStream {
     public static void main(String[] args) {
         ParallelStream main = new ParallelStream();
-        main.testExecutorService(2, 1000);
+//        main.testExecutorService(2, 1000);
 //        main.testSetThreadParallelStream(4, 100);
 //        main.testCustomPoolParallelStream(4, 100);
 //        main.testCustomPoolParallelStreamWithMainThread(4, 100);

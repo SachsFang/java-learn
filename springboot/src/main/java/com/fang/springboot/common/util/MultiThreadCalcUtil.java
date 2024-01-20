@@ -26,7 +26,7 @@ public class MultiThreadCalcUtil {
     private static final ForkJoinPool calcWorkerExecutorPool = getDefaultCalcThreadPoolExecutor();
 
     private static ForkJoinPool getDefaultCalcThreadPoolExecutor() {
-        return new ForkJoinPool(7);
+        return new ForkJoinPool(2);
 //        return new ForkJoinPool(Runtime.getRuntime().availableProcessors() - 1);
     }
 

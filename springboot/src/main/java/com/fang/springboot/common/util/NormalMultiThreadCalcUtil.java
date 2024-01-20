@@ -28,8 +28,8 @@ public class NormalMultiThreadCalcUtil {
 
     private static ExecutorService getDefaultCalcThreadPoolExecutor() {
         return new ThreadPoolExecutor(
-                2,
-                2,
+                1,
+                1,
                 10,
                 TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(50),
