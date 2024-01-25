@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2023/11/24
  */
 @Data
-@TableName(value = "data_price_macro_node_partition_100000w", autoResultMap = true)
+@TableName(value = "data_price_macro_node", autoResultMap = true)
 @ApiModel(value = "交易结果-市场节点电价")
 public class DataPriceMacroNodeDO extends PpsBasicDO {
 

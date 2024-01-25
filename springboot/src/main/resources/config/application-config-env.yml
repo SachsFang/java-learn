@@ -4,3 +4,6 @@ LOG_REQUEST: true
 MYSQL_SCHEMA: learn_master
 
 ARTHAS_ENABLE: true
+ARTHAS_PORT: 3657
+
+LIQUIDBASE: true

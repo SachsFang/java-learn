@@ -1,0 +1,82 @@
+#  数据源配置
+dataSources:
+  # 主节点配置
+  ds-master:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/learn_master_new?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  # 从节点1配置
+  ds-slave1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/learn_slave1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  # 从节点1配置
+  ds-slave2:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/learn_slave2?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+rules:
+  - !READWRITE_SPLITTING
+    dataSources:
+      # 读写分离逻辑数据源名称
+      readwrite_ds:
+        # 读写分离类型
+        staticStrategy:
+          # 写库数据源名称
+          writeDataSourceName: ds-master
+          # 读库数据源名称，多个从数据源用逗号分隔，或者使用数组表示
+          readDataSourceNames:
+            - ds-slave1
+            - ds-slave2
+        # 负载均衡算法名称
+        loadBalancerName: round_robin
+    # 负载均衡算法配置
+    loadBalancers:
+      # 负载均衡算法名称
+      round_robin:
+        # 负载均衡算法类型
+        type: ROUND_ROBIN
+        # 负载均衡算法属性配置
+        # props:
+        # ...
+props:
+  sql-show: true
+
+#    rules:
+#      sharding:
+#        default-data-source-name: ds0
+#        tables:
+#          # 配置 data_price_macro_node 表规则
+#          data_price_macro_node:
+#            actual-data-nodes: ds$->{0..1}.data_price_macro_node_$->{0..1}
+#            # 配置分库策略
+#            database-strategy:
+#              standard:
+#                sharding-column: id
+#                sharding-algorithm-name: database-inline
+#            # 配置分表策略
+#            table-strategy:
+#              standard:
+#                sharding-column: ac_node_id
+#                sharding-algorithm-name: table-inline
+#            keyGenerateStrategy:
+#              column: id
+#              keyGeneratorName: snowflake
+#        sharding-algorithms:
+#          database-inline:
+#            dataSourceClassName: INLINE
+#            props:
+#              algorithm-expression: ds$->{id % 2}
+#          table-inline:
+#            dataSourceClassName: INLINE
+#            props:
+#              algorithm-expression: data_price_macro_node_$->{ac_node_id % 2}
+#        keyGenerators:
+#          snowflake:
+#            dataSourceClassName: SNOWFLAKE

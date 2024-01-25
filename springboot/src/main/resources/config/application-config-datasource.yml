@@ -1,23 +1,44 @@
 spring:
+  autoconfigure:
+    # 排除自动配置数据源
+#    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   datasource:
     # createDatabaseIfNotExist=true 参数配置可在没有改数据库时创建数据库
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:learn_master}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:learn_master}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+#    driver-class-name: com.mysql.jdbc.Driver
+  # 使用sharding-jdbc
+    url: jdbc:shardingsphere:classpath:config/application-config-sharding.yaml
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#      show-sql: true
   jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    open-in-view: false
+    generate-ddl: false
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use-new-id-generator-mappings: false
   liquibase:
     #liquibase开关
     enabled: ${LIQUIDBASE:true}
     #指定changelog文件位置
     change-log: classpath:/db/changelog/db-changelog.xml
-
+    url: jdbc:mysql://localhost:3306/learn_master_new?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    user: root
+    password: 123456
 
 mybatis-plus:
   configuration:
+    # 控制台打印完整带参数SQL语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 设置当查询结果值为null时，同样映射该查询字段给实体(Mybatis-Plus默认会忽略查询为空的实体字段返回)。
+    call-setters-on-nulls: true
     # typeHandler扫描路径
     type-handlers-package: com.fang.springboot.common.mybatis.type
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
