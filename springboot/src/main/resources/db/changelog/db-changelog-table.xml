@@ -179,9 +179,12 @@
         </sql>
     </changeSet>
 
-<!--    <changeSet id="" author="s">-->
-<!--        <sql></sql>-->
-<!--    </changeSet>-->
+    <changeSet id="2024-01-30-1" author="sachs">
+        <sql>
+            CREATE TABLE data_price_macro_node_sharding_0 LIKE data_price_macro_node;
+            CREATE TABLE data_price_macro_node_sharding_1 LIKE data_price_macro_node;
+        </sql>
+    </changeSet>
 
 
 </databaseChangeLog>

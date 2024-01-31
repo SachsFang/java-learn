@@ -10,14 +10,14 @@ spring:
 #    driver-class-name: com.mysql.jdbc.Driver
 
   # 使用sharding-jdbc
-#    url: jdbc:shardingsphere:classpath:config/application-config-sharding.yaml
-#    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:config/application-config-sharding.yaml
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
   # 使用sharding-proxy，直接访问sharding-proxy服务暴露的端口3307、逻辑库名即可，sharding-proxy已包含sharding-jdbc功能
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3307}/${MYSQL_SCHEMA:learn_master_logic}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3307}/${MYSQL_SCHEMA:learn_master_logic}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-    driver-class-name: com.mysql.jdbc.Driver
 
 #  jpa:
 #    hibernate:
@@ -37,10 +37,10 @@ spring:
     enabled: ${LIQUIDBASE:true}
     #指定changelog文件位置
     change-log: classpath:/db/changelog/db-changelog.xml
-    # 使用sharding-jdbc因没有主从复制，需指定默认数据源：
-#    url: jdbc:mysql://localhost:3306/learn_master_new?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-#    user: root
-#    password: 123456
+    # 使用sharding-jdbc没有配置数据库主从复制或主从复制延迟较高的情况，需指定默认数据源：
+    url: jdbc:mysql://localhost:3306/ds1_learn_master?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    user: root
+    password: 123456
 
 mybatis-plus:
   configuration:

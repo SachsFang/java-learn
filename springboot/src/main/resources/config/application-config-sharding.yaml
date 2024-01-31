@@ -1,39 +1,107 @@
+# 这里的配置格式可参考 sharding-proxy中conf/config-sharding的配置。
+# 官网：https://shardingsphere.apache.org/document/legacy/3.x/document/cn/manual/sharding-jdbc/configuration/config-yaml/
+# 实践参考：https://zhuanlan.zhihu.com/p/650311232
 #  数据源配置
 dataSources:
   # 主节点配置
-  ds-master:
+  ds0-master:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/learn_master_new?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    jdbcUrl: jdbc:mysql://localhost:3306/ds0_learn_master?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    minPoolSize: 1
   # 从节点1配置
-  ds-slave1:
+  ds0-slave1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/learn_slave1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    jdbcUrl: jdbc:mysql://localhost:3306/ds0_learn_slave1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    minPoolSize: 1
+  # 从节点2配置
+  ds0-slave2:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/ds0_learn_slave2?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    minPoolSize: 1
+  # 主节点配置
+  ds1-master:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/ds1_learn_master?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    minPoolSize: 1
   # 从节点1配置
-  ds-slave2:
+  ds1-slave1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/learn_slave2?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    jdbcUrl: jdbc:mysql://localhost:3306/ds1_learn_slave1?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    minPoolSize: 1
+  # 从节点2配置
+  ds1-slave2:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/ds1_learn_slave2?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    minPoolSize: 1
 rules:
+  # 读写分离配置
   - !READWRITE_SPLITTING
     dataSources:
       # 读写分离逻辑数据源名称
-      readwrite_ds:
+      readwrite_ds0:
         # 读写分离类型
         staticStrategy:
           # 写库数据源名称
-          writeDataSourceName: ds-master
+          writeDataSourceName: ds0-master
           # 读库数据源名称，多个从数据源用逗号分隔，或者使用数组表示
           readDataSourceNames:
-            - ds-slave1
-            - ds-slave2
+            - ds0-master
+            - ds0-slave1
+            - ds0-slave2
+        # 负载均衡算法名称
+        loadBalancerName: round_robin
+      readwrite_ds1:
+        # 读写分离类型
+        staticStrategy:
+          # 写库数据源名称
+          writeDataSourceName: ds1-master
+          # 读库数据源名称，多个从数据源用逗号分隔，或者使用数组表示
+          readDataSourceNames:
+            - ds1-master
+            - ds1-slave1
+            - ds1-slave2
         # 负载均衡算法名称
         loadBalancerName: round_robin
     # 负载均衡算法配置
@@ -45,9 +113,57 @@ rules:
         # 负载均衡算法属性配置
         # props:
         # ...
+  # 分片配置
+  - !SHARDING
+    tables:
+      data_price_macro_node:
+        actualDataNodes: readwrite_ds${0..1}.data_price_macro_node_sharding_${0..1}
+        tableStrategy:
+          standard:
+            shardingColumn: data_type
+            shardingAlgorithmName: my_hash_mod
+        keyGenerateStrategy:
+          column: id
+          keyGeneratorName: snowflake
+        auditStrategy:
+          auditorNames:
+            - sharding_key_required_auditor
+          allowHintDisable: true
+    # 绑定表,也就是实际上哪些配置的sharidng表规则需要实际生效的列表
+    bindingTables:
+      - data_price_macro_node
+    # 默认分库策略
+    defaultDatabaseStrategy:
+      standard:
+        shardingColumn: id
+        shardingAlgorithmName: my_hash_mod
+    defaultAuditStrategy:
+      auditorNames:
+        - sharding_key_required_auditor
+      allowHintDisable: true
+    # 分片（分表）策略
+    shardingAlgorithms:
+      my_hash_mod:
+        # hash取模分表，先求出hash值再取模
+        type: HASH_MOD
+        props:
+          sharding-count: 2
+    keyGenerators:
+      snowflake:
+        type: SNOWFLAKE
+
+    auditors:
+      sharding_key_required_auditor:
+        type: DML_SHARDING_CONDITIONS
 props:
   sql-show: true
+  #是否在启动时检查分表元数据一致性，默认值: false
+  check.table.metadata.enabled: true
+  # 默认LOCAL,proxy的事务模型 允许LOCAL,XA,BASE三个值 LOCAL无分布式事务,XA则是采用atomikos实现的分布式事务 BASE目前尚未实现
+  proxy.transaction.type: XA
 
+
+# spring:中的配置方法
 #    rules:
 #      sharding:
 #        default-data-source-name: ds0
