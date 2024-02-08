@@ -132,6 +132,9 @@ rules:
     # 绑定表,也就是实际上哪些配置的sharidng表规则需要实际生效的列表
     bindingTables:
       - data_price_macro_node
+    # 广播表（共享表），如字典等数据量小的表
+    broadcastTables:
+      - basic_province
     # 默认分库策略
     defaultDatabaseStrategy:
       standard:
