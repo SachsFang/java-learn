@@ -1,7 +1,7 @@
 package com.fang.backend.多线程学习.线程池;
 
-import com.fang.springboot.common.util.MultiThreadCalcUtil;
-import com.fang.springboot.common.util.NormalMultiThreadCalcUtil;
+import com.fang.springboot.common.util.MultiThreadCalcUtilV2;
+import com.fang.springboot.common.util.MultiThreadCalcUtilV1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,14 +46,14 @@ public class SpeedTest {
         for (int i = 0; i < n; i++) {
             list.add(i);
         }
-        List<Integer> integers = MultiThreadCalcUtil.asyncForEach(list, ele -> {
+        List<Integer> integers = MultiThreadCalcUtilV2.asyncForEach(list, ele -> {
             printThreadInfo();
             try {
                 Thread.sleep(executeTime);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            List<Integer> integerList = MultiThreadCalcUtil.asyncForEach(list, cEle -> {
+            List<Integer> integerList = MultiThreadCalcUtilV2.asyncForEach(list, cEle -> {
                 printThreadInfo();
                 try {
                     Thread.sleep(executeTime);
@@ -81,7 +81,7 @@ public class SpeedTest {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            List<Integer> integerList = MultiThreadCalcUtil.asyncForEach(list, cEle -> {
+            List<Integer> integerList = MultiThreadCalcUtilV2.asyncForEach(list, cEle -> {
                 printThreadInfo();
                 try {
                     Thread.sleep(executeTime);
@@ -136,7 +136,7 @@ public class SpeedTest {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            List<Integer> integerList = NormalMultiThreadCalcUtil.asyncForEach(list, cEle -> {
+            List<Integer> integerList = MultiThreadCalcUtilV1.asyncForEach(list, cEle -> {
                 try {
                     Thread.sleep(executeTime);
                 } catch (InterruptedException e) {
@@ -157,13 +157,13 @@ public class SpeedTest {
         for (int i = 0; i < n; i++) {
             list.add(i);
         }
-        List<Integer> integers = NormalMultiThreadCalcUtil.asyncForEach(list, ele -> {
+        List<Integer> integers = MultiThreadCalcUtilV1.asyncForEach(list, ele -> {
             try {
                 Thread.sleep(executeTime);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            List<Integer> integerList = NormalMultiThreadCalcUtil.asyncForEach(list, cEle -> {
+            List<Integer> integerList = MultiThreadCalcUtilV1.asyncForEach(list, cEle -> {
                 try {
                     Thread.sleep(executeTime);
                 } catch (InterruptedException e) {
@@ -184,7 +184,7 @@ public class SpeedTest {
         for (int i = 0; i < n; i++) {
             list.add(i);
         }
-        List<Integer> integers = MultiThreadCalcUtil.asyncForEach(list, ele -> {
+        List<Integer> integers = MultiThreadCalcUtilV2.asyncForEach(list, ele -> {
             try {
                 Thread.sleep(executeTime);
             } catch (InterruptedException e) {

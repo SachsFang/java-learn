@@ -19,7 +19,7 @@ import static cn.hutool.core.collection.CollUtil.emptyIfNull;
  * @author shaobin
  * @date 2023/11/1 14:14
  */
-public class NormalMultiThreadCalcUtil {
+public class MultiThreadCalcUtilV1 {
     private static final ExecutorService calcFirstWorkerExecutorService = getDefaultCalcThreadPoolExecutor();
 
     private static final ExecutorService calcSecondWorkerExecutorService = getDefaultCalcThreadPoolExecutor();

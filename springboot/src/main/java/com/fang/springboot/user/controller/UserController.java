@@ -1,7 +1,7 @@
 package com.fang.springboot.user.controller;
 
 import com.fang.springboot.common.pojo.BaseResp;
-import com.fang.springboot.common.util.MultiThreadCalcUtil;
+import com.fang.springboot.common.util.MultiThreadCalcUtilV2;
 import com.fang.springboot.common.util.SpringContextManager;
 import com.fang.springboot.user.listener.UserEventListener;
 import com.fang.springboot.user.pojo.User;
@@ -223,7 +223,7 @@ public class UserController {
         // 注意不能使用new ArrayList<>()，会有线程安全问题，导致最终结果不一致
         List<User> testNullList = new Vector<>();
         long startTime2 = System.currentTimeMillis();
-        MultiThreadCalcUtil.asyncForEach(list, item -> {
+        MultiThreadCalcUtilV2.asyncForEach(list, item -> {
             try {
                 User user = new User();
                 double random = Math.random();

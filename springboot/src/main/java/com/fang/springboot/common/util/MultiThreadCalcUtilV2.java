@@ -7,6 +7,7 @@ import com.fang.springboot.common.function.DateBiFuntion;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -18,7 +19,10 @@ import java.util.stream.Collectors;
  * @author shaobin
  * @date 2023/8/23 14:45
  */
-public class MultiThreadCalcUtil {
+public class MultiThreadCalcUtilV2 {
+
+    private static final AtomicInteger lock = new AtomicInteger();
+
     private static final long TIME_OUT = 120L;
 
     private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
@@ -26,7 +30,7 @@ public class MultiThreadCalcUtil {
     private static final ForkJoinPool calcWorkerExecutorPool = getDefaultCalcThreadPoolExecutor();
 
     private static ForkJoinPool getDefaultCalcThreadPoolExecutor() {
-        return new ForkJoinPool(2);
+        return new ForkJoinPool(1);
 //        return new ForkJoinPool(Runtime.getRuntime().availableProcessors() - 1);
     }
 
@@ -35,7 +39,7 @@ public class MultiThreadCalcUtil {
     }
 
     public static <T, R> List<R> asyncForEach(Collection<T> taskList, Function<T, R> function) {
-        ForkJoinPool calcExecutorPool = getCalcExecutorPool();
+        ForkJoinPool calcExecutorPool = new ForkJoinPool(2);
 //        if (calcExecutorPool.getParallelism() - calcExecutorPool.getActiveThreadCount() <= 0) {
 //            return taskList.stream().map(function).collect(Collectors.toList());
 //        }

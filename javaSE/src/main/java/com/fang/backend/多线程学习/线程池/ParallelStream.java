@@ -1,6 +1,6 @@
 package com.fang.backend.多线程学习.线程池;
 
-import com.fang.springboot.common.util.MultiThreadCalcUtil;
+import com.fang.springboot.common.util.MultiThreadCalcUtilV2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ParallelStream {
     public static void main(String[] args) {
         ParallelStream main = new ParallelStream();
-//        main.testExecutorService(2, 1000);
+        main.testExecutorService(2, 1000);
 //        main.testSetThreadParallelStream(4, 100);
 //        main.testCustomPoolParallelStream(4, 100);
 //        main.testCustomPoolParallelStreamWithMainThread(4, 100);
@@ -28,7 +28,7 @@ public class ParallelStream {
         for (int i = 0; i < n; i++) {
             list.add(i);
         }
-        List<Integer> integers = MultiThreadCalcUtil.asyncForEach(list, ele -> {
+        List<Integer> integers = MultiThreadCalcUtilV2.asyncForEach(list, ele -> {
             printThreadInfo();
             System.out.println("=============");
             try {
@@ -48,7 +48,7 @@ public class ParallelStream {
     }
 
     private List<Integer> submitMultiTasks(int executeTime, List<Integer> list) {
-        return MultiThreadCalcUtil.asyncForEach(list, cEle -> {
+        return MultiThreadCalcUtilV2.asyncForEach(list, cEle -> {
             printThreadInfo();
             try {
                 Thread.sleep(executeTime);

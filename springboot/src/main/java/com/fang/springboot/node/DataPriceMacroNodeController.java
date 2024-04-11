@@ -3,7 +3,7 @@ package com.fang.springboot.node;
 import com.fang.springboot.common.BaseController;
 import com.fang.springboot.common.builder.BaseRespBuilder;
 import com.fang.springboot.common.pojo.BaseResp;
-import com.fang.springboot.common.util.MultiThreadCalcUtil;
+import com.fang.springboot.common.util.MultiThreadCalcUtilV2;
 import com.fang.springboot.node.pojo.DataPriceMacroNodeDO;
 import com.fang.springboot.node.service.DataPriceMacroNodeService;
 import io.swagger.annotations.Api;
@@ -44,7 +44,7 @@ public class DataPriceMacroNodeController extends BaseController {
                                                                              @RequestParam List<String> nodeIds,
                                                                              @RequestParam List<String> dataTypes){
          return BaseRespBuilder.success().setData(
-                 MultiThreadCalcUtil.asyncShardingByDate(startDate, endDate, (itemStartDate, itemEndDate) ->
+                 MultiThreadCalcUtilV2.asyncShardingByDate(startDate, endDate, (itemStartDate, itemEndDate) ->
                          dataPriceMacroNodeService.query(itemStartDate, itemEndDate, nodeIds, dataTypes))
          ).build();
      }
