@@ -24,9 +24,9 @@ public class ThreadPool implements Callable<String> {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 //        SingleThreadExecutorDemo();
-        FixedThreadPoolDemo();
+//        FixedThreadPoolDemo();
 //        CacheTreadPool();
-//        ScheduledThreadPoolDemo();
+        ScheduledThreadPoolDemo();
         ;
     }
 
@@ -56,6 +56,16 @@ public class ThreadPool implements Callable<String> {
 
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
+        /*延时性*/
+        Future futureDelay = executor.schedule(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(new Date() + ": " + Thread.currentThread().getName()+"-延迟输出");
+            }
+        }, 10, TimeUnit.SECONDS);
+        System.out.println(new Date() + ": " + "线程提交到了线程池");
+        executeScheduledCode(executor, futureDelay);
+
         /*周期性*/
         Future futurePeriod = executor.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -63,12 +73,8 @@ public class ThreadPool implements Callable<String> {
                 System.out.println(new Date() + ": " + Thread.currentThread().getName()+"-周期输出");
             }
         }, 0, 5, TimeUnit.SECONDS);
-
-        /*延时性*/
-        Future<String> future = executor.schedule(new ThreadPool(), 10, TimeUnit.SECONDS);
         System.out.println(new Date() + ": " + "线程提交到了线程池");
-        executeScheduledCode(executor, future);
-
+        executeScheduledCode(executor, futurePeriod);
     }
 
     public static void executeScheduledCode(ScheduledExecutorService executor, Future<String> future) throws ExecutionException, InterruptedException {

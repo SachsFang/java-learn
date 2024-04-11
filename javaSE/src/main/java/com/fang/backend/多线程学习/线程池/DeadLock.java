@@ -1,6 +1,6 @@
 package com.fang.backend.多线程学习.线程池;
 
-import com.fang.springboot.common.util.NormalMultiThreadCalcUtil;
+import com.fang.springboot.common.util.MultiThreadCalcUtilV1;
 import lombok.SneakyThrows;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class DeadLock {
         for (int i = 0; i < n; i++) {
             list.add(i);
         }
-        List<Integer> integers = NormalMultiThreadCalcUtil.asyncForEach(list, ele -> {
+        List<Integer> integers = MultiThreadCalcUtilV1.asyncForEach(list, ele -> {
             try {
                 Thread.sleep(executeTime);
             } catch (InterruptedException e) {
@@ -32,7 +32,7 @@ public class DeadLock {
             }
             printThreadInfo();
             System.out.println("=============");
-            List<Integer> integerList = NormalMultiThreadCalcUtil.asyncForEach(list, cEle -> {
+            List<Integer> integerList = MultiThreadCalcUtilV1.asyncForEach(list, cEle -> {
                 printThreadInfo();
                 try {
                     Thread.sleep(executeTime);

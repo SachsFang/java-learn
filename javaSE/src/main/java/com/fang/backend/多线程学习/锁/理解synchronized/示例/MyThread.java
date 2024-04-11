@@ -1,4 +1,4 @@
-package com.fang.backend.多线程学习.理解synchronized;
+package com.fang.backend.多线程学习.锁.理解synchronized.示例;
 
 /**
  * Created by SachsFang on 2021/7/14 14:34
