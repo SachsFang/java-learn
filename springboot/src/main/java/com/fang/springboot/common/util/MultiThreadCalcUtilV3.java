@@ -33,8 +33,13 @@ public class MultiThreadCalcUtilV3 {
     private static final ForkJoinPool calcWorkerExecutorPool = getDefaultCalcThreadPoolExecutor();
 
     private static ForkJoinPool getDefaultCalcThreadPoolExecutor() {
-        return new ForkJoinPool(1);
+        return new ForkJoinPool(2);
 //        return new ForkJoinPool(Runtime.getRuntime().availableProcessors() - 1);
+    }
+
+    public static <T> void async(Runnable runnable) {
+        ForkJoinPool calcExecutorPool = getCalcExecutorPool();
+        calcExecutorPool.submit(runnable);
     }
 
     public static <T> void asyncForEach(Collection<T> taskList, Consumer<T> consumer) {
@@ -44,10 +49,10 @@ public class MultiThreadCalcUtilV3 {
     public static <T, R> List<R> asyncForEach(Collection<T> list, Function<T, R> function) {
         ForkJoinPool calcExecutorPool = getCalcExecutorPool();
         // 线程池不空闲时拒绝使用多线程，减轻系统负担，因为cpu资源紧张，如果cpu资源充裕可去除此处if代码。ps：使用calcExecutorPool.isQuiescent需解决线程安全问题
-        if (!calcExecutorPool.isQuiescent() || lock.get() >= 1) {
-            return list.stream().map(function).collect(Collectors.toList());
-        }
-        lock.getAndIncrement();
+//        if (!calcExecutorPool.isQuiescent() || lock.get() >= 1) {
+//            return list.stream().map(function).collect(Collectors.toList());
+//        }
+//        lock.getAndIncrement();
         List<Task<T, R>> taskList = new ArrayList<>();
         try {
             list.forEach(item -> {
@@ -59,7 +64,7 @@ public class MultiThreadCalcUtilV3 {
         } catch (Exception e) {
             throw e;
         } finally {
-            lock.getAndDecrement();
+//            lock.getAndDecrement();
         }
         return taskList.stream().map(Task::getResult).collect(Collectors.toList());
     }
@@ -72,11 +77,11 @@ public class MultiThreadCalcUtilV3 {
         ForkJoinPool calcExecutorPool = getCalcExecutorPool();
         Map<K, R> rMap = new HashMap<>();
         // 线程池不空闲时拒绝使用多线程，减轻系统负担，因为cpu资源紧张，如果cpu资源充裕可去除此处if代码。
-        if (!calcExecutorPool.isQuiescent() || lock.get() >= 1) {
-            taskMap.forEach((key, value) -> rMap.put(key, biFunction.apply(key, value)));
-            return rMap;
-        }
-        lock.getAndIncrement();
+//        if (!calcExecutorPool.isQuiescent() || lock.get() >= 1) {
+//            taskMap.forEach((key, value) -> rMap.put(key, biFunction.apply(key, value)));
+//            return rMap;
+//        }
+//        lock.getAndIncrement();
         List<Task<Map.Entry<K, V>, R>> taskList = new ArrayList<>();
         try {
             new ArrayList<>(taskMap.entrySet()).forEach(kvEntry -> {
@@ -94,7 +99,7 @@ public class MultiThreadCalcUtilV3 {
         } catch (Exception e) {
             throw e;
         } finally {
-            lock.getAndDecrement();
+//            lock.getAndDecrement();
         }
         taskList.forEach(item -> {
             rMap.put(item.getT().getKey(), item.getResult());
@@ -123,8 +128,7 @@ public class MultiThreadCalcUtilV3 {
         if (scopeDate.size() <= 1) {
             return biFunction.apply(startDate, endDate);
         }
-//        int availableProcessors = Runtime.getRuntime().availableProcessors() - 1;
-        int availableProcessors = 8 - 1;
+        int availableProcessors = getCalcExecutorPool().getParallelism();
         int cycles = Math.min(scopeDate.size(), availableProcessors);
         int incr = scopeDate.size() > availableProcessors ? (int) Math.ceil(scopeDate.size() / (double) availableProcessors) : 1;
         Map<Date, Date> cyclesMap = new HashMap<>();
@@ -136,7 +140,10 @@ public class MultiThreadCalcUtilV3 {
                     break;
                 }
                 startIndex = i == 0 ? 0 : endIndex + 1;
-                endIndex = i == cycles - 1 ? scopeDate.size() - 1 : startIndex + incr - 1;
+                endIndex = i == cycles - 1 || i * incr + 1 == scopeDate.size() ? scopeDate.size() - 1 : startIndex + incr - 1;
+                if (startIndex > scopeDate.size() - 1 ||endIndex > scopeDate.size() - 1) {
+                    break;
+                }
                 cyclesMap.put(scopeDate.get(startIndex), scopeDate.get(endIndex));
             }
         } else {

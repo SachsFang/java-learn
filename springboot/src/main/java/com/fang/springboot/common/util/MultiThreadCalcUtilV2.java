@@ -69,7 +69,7 @@ public class MultiThreadCalcUtilV2 {
 //        }
         Map<K, R> rMap = new ConcurrentHashMap<>();
         Future<List<R>> future = calcExecutorPool.submit(() ->
-                // ps:Set/Map.entrySet不支持并行流，先把Map中的key转成list，再用并行流能生效了
+                // ps:Set/Map.entrySet不支持并行流，使用并行会失效，先把Map中的key转成list，再用并行流能生效了
                 new ArrayList<>(taskMap.entrySet()).parallelStream().map(kvEntry -> {
                     R result = function.apply(kvEntry.getKey(), kvEntry.getValue());
                     if (Objects.nonNull(kvEntry.getKey()) && Objects.nonNull(result)) {
