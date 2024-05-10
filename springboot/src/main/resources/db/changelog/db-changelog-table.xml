@@ -186,5 +186,19 @@
         </sql>
     </changeSet>
 
+    <changeSet id="2024-05-06" author="shaobin">
+        <sql>
+            CREATE TABLE imt_cahce
+            (
+                `id`          VARCHAR(32)   NOT NULL COMMENT 'ID',
+                `method_path` VARCHAR(255)  NOT NULL COMMENT '方法路径',
+                `params`      VARCHAR(32) NOT NULL COMMENT '参数',
+                `data`        LONGTEXT COMMENT '数据',
+                `create_time` DATETIME COMMENT '创建时间',
+                PRIMARY KEY (id)
+            ) COMMENT = '缓存中间表';
+            CREATE UNIQUE INDEX uqx_method_params ON imt_cahce(method_path,params);
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>
