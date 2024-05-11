@@ -29,15 +29,15 @@ public interface ImtCacheService extends FacadeService {
      * @param data
      * @return
      */
-    ImtCacheDO saveOrUpdate(String methodPath, String params, Object data);
+    ImtCacheDO saveOrUpdate(String appId, String methodPath, String params, Object data);
 
     /**
      * 保存或更新缓存中间表数据
      *
-     * @param ImtCacheDO 缓存中间表数据
+     * @param imtCacheDO 缓存中间表数据
      * @return
      */
-    ImtCacheDO saveOrUpdate(ImtCacheDO ImtCacheDO);
+    ImtCacheDO saveOrUpdate(ImtCacheDO imtCacheDO);
 
     /**
      * 根据方法路径删除数据
@@ -45,5 +45,5 @@ public interface ImtCacheService extends FacadeService {
      * @param methodPaths
      * @return
      */
-    boolean delete(List<String> methodPaths);
+    boolean delete(String appId, List<String> methodPaths);
 }

@@ -9,3 +9,4 @@ spring:
   mvc:
     async:
       request-timeout: 60000
+cache_query: ${CACHE_QUERY:false}

@@ -38,11 +38,11 @@ public class ImtCacheServiceImpl implements ImtCacheService {
     }
 
     @Override
-    public ImtCacheDO saveOrUpdate(String methodPath, String params, Object data) {
+    public ImtCacheDO saveOrUpdate(String appId, String methodPath, String params, Object data) {
         if (StringUtils.isBlank(methodPath) || StringUtils.isBlank(params) || Objects.isNull(data)) {
             return null;
         }
-        return saveOrUpdate(new ImtCacheDO(methodPath, params, JsonUtil.parseToJson(data), new Date()));
+        return saveOrUpdate(new ImtCacheDO(appId, methodPath, params, JsonUtil.parseToJson(data), new Date()));
     }
 
     @Override
@@ -52,12 +52,20 @@ public class ImtCacheServiceImpl implements ImtCacheService {
     }
 
     @Override
-    public boolean delete(List<String> methodPaths) {
+    public boolean delete(String appId, List<String> methodPaths) {
         if (CollectionUtils.isEmpty(methodPaths)) {
             return false;
         }
-        return imtCacheDAO.delete(Wrappers.<ImtCacheDO>lambdaQuery()
-                .in(ImtCacheDO::getMethodPath, methodPaths)
-        ) > 0;
+        boolean flag = true;
+        for (String methodPath : methodPaths) {
+            boolean isSuccess = imtCacheDAO.delete(Wrappers.<ImtCacheDO>lambdaQuery()
+                    .eq(Objects.nonNull(appId), ImtCacheDO::getAppId, appId)
+                    .likeRight(ImtCacheDO::getMethodPath, methodPath)
+            ) > 0;
+            if (!isSuccess) {
+                flag = false;
+            }
+        }
+        return flag;
     }
 }

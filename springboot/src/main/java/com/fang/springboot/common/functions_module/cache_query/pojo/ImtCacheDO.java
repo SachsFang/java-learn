@@ -20,6 +20,11 @@ import java.util.Date;
 @ApiModel(value = "缓存中间表")
 public class ImtCacheDO extends PpsBasicDO {
     /**
+     * 应用ID
+     */
+    private String appId;
+
+    /**
      * 方法路径
      */
     private String methodPath;
@@ -42,17 +47,22 @@ public class ImtCacheDO extends PpsBasicDO {
     public ImtCacheDO() {
     }
 
-    public ImtCacheDO(String methodPath, String params, String data) {
-        this.methodPath = methodPath;
-        this.params = params;
-        this.data = data;
-    }
-
-    public ImtCacheDO(String methodPath, String params, String data, Date createTime) {
+    public ImtCacheDO(String appId, String methodPath, String params, String data, Date createTime) {
+        this.appId = appId;
         this.methodPath = methodPath;
         this.params = params;
         this.data = data;
         this.createTime = createTime;
+    }
+
+    @ApiModelProperty(name = "应用ID")
+    @Column(name = "app_id")
+    public String getAppId(){
+        return this.appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     @ApiModelProperty(name = "方法路径")

@@ -22,6 +22,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -44,14 +45,20 @@ public class CacheQueryAspect {
 
     private final String DATABASE_ERROR = "Database service error!";
 
+    @Value("${spring.application.name:}")
+    private String appId;
+
+    @Value("${cache_query}")
+    private Boolean cahceQueryEnable;
+
     @Autowired
     private ImtCacheService imtCacheService;
 
-    @Pointcut("@annotation(com.tsintergy.fire.serviceapi.common.annotation.CacheQuery)")
+    @Pointcut("@annotation(com.fang.springboot.common.functions_module.cache_query.annotation.CacheQuery)")
     public void cacheQueryPointcut() {
     }
 
-    @Pointcut("@annotation(com.tsintergy.fire.serviceapi.common.annotation.CacheRemove)")
+    @Pointcut("@annotation(com.fang.springboot.common.functions_module.cache_query.annotation.CacheRemove)")
     public void cacheRemovePointcut() {
     }
 
@@ -62,7 +69,7 @@ public class CacheQueryAspect {
         Method method = signature.getMethod();
         CacheQuery annotation = method.getAnnotation(CacheQuery.class);
         CacheLevel cacheLevel = annotation.cacheLevel();
-        if (Objects.equals(cacheLevel, CacheLevel.NONE)) {
+        if (!cahceQueryEnable || Objects.equals(cacheLevel, CacheLevel.NONE)) {
             return joinPoint.proceed();
         }
         // 获取方法签名
@@ -78,7 +85,7 @@ public class CacheQueryAspect {
         // 获取缓存数据
         Object data = null;
         String cacheData = null;
-        if (StringUtils.isNotBlank(cacheData = getByCache(methodPathKey, argsKey, cacheLevel))) {
+        if (StringUtils.isNotBlank(cacheData = getByCache(appId + methodPathKey, argsKey, cacheLevel))) {
             data = JSON.parseObject(Objects.toString(cacheData), returnType);
         } else if (Objects.nonNull(cacheData = getByImt(methodPathKey, argsKey, cacheLevel))) {
             data = JSON.parseObject(cacheData, returnType);
@@ -103,6 +110,10 @@ public class CacheQueryAspect {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         CacheRemove annotation = method.getAnnotation(CacheRemove.class);
+        CacheLevel cacheLevel = annotation.cacheLevel();
+        if (!cahceQueryEnable || Objects.equals(cacheLevel, CacheLevel.NONE)) {
+            return;
+        }
         String targetMethod = annotation.targetMethod();
         String[] targetMethods = annotation.targetMethods();
         List<String> targetMethodList = new ArrayList<>();
@@ -112,7 +123,6 @@ public class CacheQueryAspect {
         if (CollectionUtils.isNotEmpty(targetMethodList)) {
             targetMethodList.addAll(Arrays.asList(targetMethods));
         }
-        CacheLevel cacheLevel = annotation.cacheLevel();
         targetMethodList.forEach(methodPath -> {
             removeCache(methodPath, cacheLevel);
         });
@@ -140,7 +150,7 @@ public class CacheQueryAspect {
             return;
         }
         try {
-            imtCacheService.saveOrUpdate(methodPathKey, argsKey, data);
+            imtCacheService.saveOrUpdate(this.appId, methodPathKey, argsKey, data);
         } catch (Exception e) {
             log.info(DATABASE_ERROR);
         }
@@ -151,7 +161,7 @@ public class CacheQueryAspect {
             return;
         }
         try {
-            imtCacheService.delete(methodPathKeys);
+            imtCacheService.delete(this.appId, methodPathKeys);
         } catch (Exception e) {
             log.info(DATABASE_ERROR);
         }
@@ -161,7 +171,7 @@ public class CacheQueryAspect {
         if (!isCacheLevel(cacheLevel)) {
             return null;
         }
-        String key = methodPathKey + SPLIT_NUM + argsKey;
+        String key = this.appId + SPLIT_NUM + methodPathKey + SPLIT_NUM + argsKey;
         String data = null;
         try {
             data = RedisCacheUtils.get(key, String.class);
@@ -176,8 +186,8 @@ public class CacheQueryAspect {
             return;
         }
         try {
-            String key = methodPathKey + SPLIT_NUM + argsKey;
-            RedisCacheUtils.put(key, data);
+            String key = this.appId + SPLIT_NUM + methodPathKey + SPLIT_NUM + argsKey;
+            RedisCacheUtils.put(key, data, 24 * 60 * 60);
         } catch (Exception e) {
             log.info(CACHE_ERROR);
         }
@@ -204,5 +214,4 @@ public class CacheQueryAspect {
     private boolean isCacheLevel(CacheLevel cacheLevel) {
         return Objects.equals(cacheLevel, CacheLevel.CACHE) || Objects.equals(cacheLevel, CacheLevel.MIXED);
     }
-
 }
