@@ -9,7 +9,7 @@ import com.fang.springboot.common.functions_module.cache_query.enums.CacheLevel;
 import com.fang.springboot.common.functions_module.cache_query.pojo.ImtCacheDO;
 import com.fang.springboot.common.functions_module.redis.utils.RedisCacheUtils;
 import com.fang.springboot.common.util.JsonUtil;
-import com.fang.springboot.common.util.MultiThreadCalcUtilV3;
+import com.fang.springboot.common.functions_module.multi_thread_calc.util.MultiThreadCalcUtilV3;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

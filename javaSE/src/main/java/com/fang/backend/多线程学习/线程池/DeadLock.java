@@ -1,6 +1,6 @@
 package com.fang.backend.多线程学习.线程池;
 
-import com.fang.springboot.common.util.MultiThreadCalcUtilV1;
+import com.fang.springboot.common.functions_module.multi_thread_calc.util.MultiThreadCalcUtilV1;
 import lombok.SneakyThrows;
 
 import java.util.ArrayList;

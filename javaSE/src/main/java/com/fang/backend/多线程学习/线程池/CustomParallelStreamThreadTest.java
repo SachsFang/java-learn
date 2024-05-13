@@ -1,7 +1,7 @@
 package com.fang.backend.多线程学习.线程池;
 
-import com.fang.springboot.common.util.MultiThreadCalcUtilV2;
-import com.fang.springboot.common.util.MultiThreadCalcUtilV3;
+import com.fang.springboot.common.functions_module.multi_thread_calc.util.MultiThreadCalcUtilV2;
+import com.fang.springboot.common.functions_module.multi_thread_calc.util.MultiThreadCalcUtilV3;
 import liquibase.pro.packaged.T;
 import liquibase.pro.packaged.V;
 

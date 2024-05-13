@@ -1,7 +1,7 @@
 package com.fang.springboot.user.controller;
 
 import com.fang.springboot.common.pojo.BaseResp;
-import com.fang.springboot.common.util.MultiThreadCalcUtilV2;
+import com.fang.springboot.common.functions_module.multi_thread_calc.util.MultiThreadCalcUtilV2;
 import com.fang.springboot.common.util.SpringContextManager;
 import com.fang.springboot.user.listener.UserEventListener;
 import com.fang.springboot.user.pojo.User;

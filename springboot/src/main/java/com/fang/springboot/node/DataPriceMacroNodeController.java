@@ -3,7 +3,7 @@ package com.fang.springboot.node;
 import com.fang.springboot.common.BaseController;
 import com.fang.springboot.common.builder.BaseRespBuilder;
 import com.fang.springboot.common.pojo.BaseResp;
-import com.fang.springboot.common.util.MultiThreadCalcUtilV2;
+import com.fang.springboot.common.functions_module.multi_thread_calc.util.MultiThreadCalcUtilV2;
 import com.fang.springboot.node.pojo.DataPriceMacroNodeDO;
 import com.fang.springboot.node.service.DataPriceMacroNodeService;
 import io.swagger.annotations.Api;

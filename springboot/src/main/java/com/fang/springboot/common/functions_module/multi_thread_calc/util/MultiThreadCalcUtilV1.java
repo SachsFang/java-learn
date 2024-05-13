@@ -1,4 +1,4 @@
-package com.fang.springboot.common.util;
+package com.fang.springboot.common.functions_module.multi_thread_calc.util;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
