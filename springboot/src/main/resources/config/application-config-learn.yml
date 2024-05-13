@@ -9,4 +9,9 @@ spring:
   mvc:
     async:
       request-timeout: 60000
+# 缓存查询
 cache_query: ${CACHE_QUERY:false}
+# 多线程计算
+multi-thread-calc:
+  pool:
+    core-size: ${MULTI_THREAD_CALC_POOL_CORE_SIZE:3}

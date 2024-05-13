@@ -1,4 +1,4 @@
-package com.fang.springboot.common.util;
+package com.fang.springboot.common.functions_module.multi_thread_calc.util;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
@@ -30,12 +30,7 @@ public class MultiThreadCalcUtilV3 {
 
     private static final AtomicInteger lock = new AtomicInteger();
 
-    private static final ForkJoinPool calcWorkerExecutorPool = getDefaultCalcThreadPoolExecutor();
-
-    private static ForkJoinPool getDefaultCalcThreadPoolExecutor() {
-        return new ForkJoinPool(2);
-//        return new ForkJoinPool(Runtime.getRuntime().availableProcessors() - 1);
-    }
+    protected static ForkJoinPool calcWorkerExecutorPool;
 
     public static <T> void async(Runnable runnable) {
         ForkJoinPool calcExecutorPool = getCalcExecutorPool();
