@@ -108,22 +108,27 @@ public class MultiThreadCalcUtilV3 {
         return rMap;
     }
 
+    public static <R> List<R> asyncShardingByDate(Date startDate, Date endDate, DateBiFuntion<R> biFunction) {
+        return asyncShardingByDate(startDate, endDate, null, biFunction);
+    }
+
     /**
      * 异步日期分片功能
-     * ps: 1.异步分片查询加快整体查询速度 2.解决dubbo服务单次调用数据量过大、超时问题
+     * ps: 1.异步分片查询加快整体查询速度 2.解决dubbo服务单次调用数据量过大、超时问题 3.单个数据库请求索引失效
      *
      * @param startDate
      * @param endDate
+     * @param shardingCount
      * @param biFunction
      * @param <R>
      * @return
      */
-    public static <R> List<R> asyncShardingByDate(Date startDate, Date endDate, DateBiFuntion<R> biFunction) {
+    public static <R> List<R> asyncShardingByDate(Date startDate, Date endDate, Integer shardingCount, DateBiFuntion<R> biFunction) {
         List<Date> scopeDate = DateUtil.rangeToList(startDate, endDate, DateField.DAY_OF_MONTH).stream().map(DateTime::toJdkDate).collect(Collectors.toList());
-        if (scopeDate.size() <= 1) {
+        if (scopeDate.size() <= 31) {
             return biFunction.apply(startDate, endDate);
         }
-        int availableProcessors = getCalcExecutorPool().getParallelism();
+        int availableProcessors = Objects.nonNull(shardingCount) ? shardingCount : getCalcExecutorPool().getParallelism();
         int cycles = Math.min(scopeDate.size(), availableProcessors);
         int incr = scopeDate.size() > availableProcessors ? (int) Math.ceil(scopeDate.size() / (double) availableProcessors) : 1;
         Map<Date, Date> cyclesMap = new HashMap<>();
