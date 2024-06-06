@@ -2,7 +2,6 @@ package com.fang.springboot.common.functions_module.cache_query.aspect;
 
 import cn.hutool.crypto.digest.MD5;
 import com.alibaba.fastjson.JSON;
-import com.fang.springboot.common.functions_module.cache_query.annotation.CacheQuery;
 import com.fang.springboot.common.functions_module.cache_query.annotation.CacheRemove;
 import com.fang.springboot.common.functions_module.cache_query.api.ImtCacheService;
 import com.fang.springboot.common.functions_module.cache_query.enums.CacheLevel;
@@ -28,6 +27,7 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author shaobin
@@ -48,8 +48,11 @@ public class CacheQueryAspect {
     @Value("${spring.application.name:}")
     private String appId;
 
-    @Value("${cache_query}")
-    private Boolean cahceQueryEnable;
+    @Value("${cache_query.enable:}")
+    private Boolean cacheEnable;
+
+    @Value("${cache_query.level:}")
+    private CacheLevel cacheLevel;
 
     @Autowired
     private ImtCacheService imtCacheService;
@@ -65,13 +68,11 @@ public class CacheQueryAspect {
     @Around(value = "cacheQueryPointcut()")
     @SneakyThrows
     public Object cacheQueryAround(ProceedingJoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        CacheQuery annotation = method.getAnnotation(CacheQuery.class);
-        CacheLevel cacheLevel = annotation.cacheLevel();
-        if (!cahceQueryEnable || Objects.equals(cacheLevel, CacheLevel.NONE)) {
+        if (!cacheEnable || Objects.equals(cacheLevel, CacheLevel.NONE)) {
             return joinPoint.proceed();
         }
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
         // 获取方法签名
         String methodPathKey = method.getDeclaringClass().getName() + POINT_NUM + method.getName();
         Type returnType = method.getGenericReturnType();
@@ -107,26 +108,31 @@ public class CacheQueryAspect {
     @AfterReturning(value = "cacheRemovePointcut()")
     @SneakyThrows
     public void CacheRemoveAfterReturning(JoinPoint joinPoint) {
+        if (!cacheEnable || Objects.equals(cacheLevel, CacheLevel.NONE)) {
+            return;
+        }
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         CacheRemove annotation = method.getAnnotation(CacheRemove.class);
-        CacheLevel cacheLevel = annotation.cacheLevel();
-        if (!cahceQueryEnable || Objects.equals(cacheLevel, CacheLevel.NONE)) {
-            return;
+        List<String> targetList = new ArrayList<>();
+        if (StringUtils.isNotBlank(annotation.targetMethod())) {
+            targetList.add(annotation.targetMethod());
         }
-        String targetMethod = annotation.targetMethod();
-        String[] targetMethods = annotation.targetMethods();
-        List<String> targetMethodList = new ArrayList<>();
-        if (Objects.nonNull(targetMethod)) {
-            targetMethodList.add(targetMethod);
+        if (annotation.targetClass() != Object.class) {
+            targetList.add(annotation.targetClass().getName());
         }
-        if (CollectionUtils.isNotEmpty(targetMethodList)) {
-            targetMethodList.addAll(Arrays.asList(targetMethods));
+        List<String> targetMethods = Arrays.asList(annotation.targetMethods());
+        if (CollectionUtils.isNotEmpty(targetMethods)) {
+            targetList.addAll(targetMethods);
         }
-        targetMethodList.forEach(methodPath -> {
+        List<Class<?>> targetClasses = Arrays.asList(annotation.targetClasses());
+        if (CollectionUtils.isNotEmpty(targetClasses)) {
+            targetList.addAll(targetClasses.stream().map(Class::getName).collect(Collectors.toList()));
+        }
+        targetList.forEach(methodPath -> {
             removeCache(methodPath, cacheLevel);
         });
-        removeImt(targetMethodList, cacheLevel);
+        removeImt(targetList, cacheLevel);
     }
 
     private String getByImt(String methodPathKey, String argsKey, CacheLevel cacheLevel) {

@@ -13,9 +13,13 @@ import java.lang.annotation.*;
 @Inherited
 public @interface CacheRemove {
 
+    Class<?> targetClass() default Object.class;
+
+    Class<?>[] targetClasses() default {};
+
     String targetMethod() default "";
 
     String[] targetMethods() default {};
 
-    CacheLevel cacheLevel() default CacheLevel.MIXED;
+    CacheLevel cacheLevel() default CacheLevel.CACHE;
 }

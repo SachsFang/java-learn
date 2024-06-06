@@ -10,7 +10,9 @@ spring:
     async:
       request-timeout: 60000
 # 缓存查询
-cache_query: ${CACHE_QUERY:false}
+cache_query:
+  enable: ${CACHE_QUERY_ENABLE:false}
+  level: ${CACHE_QUERY_LEVEL:NONE}
 # 多线程计算
 multi-thread-calc:
   pool:
