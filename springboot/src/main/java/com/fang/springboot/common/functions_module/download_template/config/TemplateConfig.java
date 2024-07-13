@@ -1,4 +1,4 @@
-package com.fang.springboot.download_template.config;
+package com.fang.springboot.common.functions_module.download_template.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

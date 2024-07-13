@@ -1,7 +1,7 @@
-package com.fang.springboot.download_template.constant;
+package com.fang.springboot.common.functions_module.download_template.constant;
 
+import com.fang.springboot.common.functions_module.download_template.config.TemplateConfig;
 import com.fang.springboot.common.util.SpringContextManager;
-import com.fang.springboot.download_template.config.TemplateConfig;
 
 /**
  * @author shaobin

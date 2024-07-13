@@ -1,9 +1,9 @@
-package com.fang.springboot.download_template.controller;
+package com.fang.springboot.common.functions_module.download_template.controller;
 
 import com.fang.springboot.common.builder.BaseRespBuilder;
+import com.fang.springboot.common.functions_module.download_template.constant.TemplateConstant;
 import com.fang.springboot.common.pojo.BaseResp;
-import com.fang.springboot.download_template.constant.TemplateConstant;
-import com.fang.springboot.download_template.service.DownloadService;
+import com.fang.springboot.common.functions_module.download_template.service.DownloadService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.codec.CharEncoding;

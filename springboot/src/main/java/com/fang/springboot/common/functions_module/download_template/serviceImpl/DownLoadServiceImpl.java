@@ -1,8 +1,8 @@
-package com.fang.springboot.download_template.serviceImpl;
+package com.fang.springboot.common.functions_module.download_template.serviceImpl;
 
-import com.fang.springboot.download_template.constant.TemplateConstant;
-import com.fang.springboot.download_template.service.DownloadService;
-import com.fang.springboot.download_template.util.CompressUtil;
+import com.fang.springboot.common.functions_module.download_template.constant.TemplateConstant;
+import com.fang.springboot.common.functions_module.download_template.service.DownloadService;
+import com.fang.springboot.common.functions_module.download_template.util.CompressUtil;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
