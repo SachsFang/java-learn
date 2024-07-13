@@ -24,6 +24,7 @@
         <knife4j.version>2.0.8</knife4j.version>
         <mybatis-plus.version>3.3.1</mybatis-plus.version>
         <sharding-sphere.version>4.1.1</sharding-sphere.version>
+        <elasticsearch.version>7.8.0</elasticsearch.version>
     </properties>
 
     <dependencyManagement><!--不加这个标签子pom的依赖可能读不到版本号-->
@@ -172,12 +173,12 @@
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
-                <version>4.5.2</version>
+                <version>4.5.10</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpcore</artifactId>
-                <version>4.4.5</version>
+                <version>4.4.13</version>
             </dependency>
             <dependency>
                 <groupId>dom4j</groupId>
@@ -348,6 +349,18 @@
                 <groupId>com.taobao.arthas</groupId>
                 <artifactId>arthas-spring-boot-starter</artifactId>
                 <version>3.6.3</version>
+            </dependency>
+            <!-- elasticsearch -->
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <!-- elasticsearch 的客户端 -->
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
 
         </dependencies>

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2023/11/27 15:26
  */
 @Configuration
-@MapperScan("com.fang.springboot.*.dao")
+@MapperScan({"com.fang.springboot.*.dao", "com.fang.springboot.common.functions_module.*.dao"})
 public class MybatisConfig {
     @Bean
     public ConfigurationCustomizer mybatisConfigurationCustomizer() {
