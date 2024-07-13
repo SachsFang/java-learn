@@ -88,4 +88,29 @@ public class GatewayController {
     public String noParamBlockHandler(BlockException blockException) {
         return "当前访问人数过多，请稍后重试！，错误信息为；" + blockException;
     }
+
+    @RequestMapping(value = "/degrade")
+    @SentinelResource(value = "degrade", blockHandler = "deGradeBack")
+    public String downLevel() {
+        callRemoteService();
+        return "ok";
+    }
+
+    // 模拟远程服务调用，可能会抛出异常或返回错误结果
+    private static Object callRemoteService() {
+        // 这里只是模拟，实际情况中应该是调用远程服务
+        if (Math.random() < 1) {
+            // 模拟 100% 的请求失败
+            throw new RuntimeException("远程服务调用失败");
+        }
+        return "成功调用远程服务";
+    }
+
+    // 降级逻辑
+    public String deGradeBack(BlockException blockException) {// 必须声明public、String，参数之一为BlockException才能生效
+        // 这里可以执行一些默认的返回值、缓存数据读取或者快速失败等操作
+        String msg = "服务熔断，执行降级逻辑";
+        System.out.println(msg);
+        return msg;
+    }
 }
